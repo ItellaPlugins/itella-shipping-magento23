@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="carriers">
+            <group id="Itella" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Itella</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled for Checkout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                </field>
+                <field id="is_test" translate="label" type="select" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Test mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="account" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>User</label>
+                </field>
+                <field id="password" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Password</label>
+                </field>
+                <field id="contract" translate="label comment" type="text" sortOrder="42" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Contract</label>
+                </field>
+                <field id="tracking_start" translate="label comment" type="text" sortOrder="43" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Tracking number starts from</label>
+                </field>
+                <field id="cod_company" translate="label" type="text" sortOrder="91" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <label>Company name</label>
+                </field>
+                <field id="cod_bank_account" translate="label" type="text" sortOrder="92" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <label>Bank account number</label>
+                </field>
+                <field id="company_address" translate="label" type="text" sortOrder="93" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <label>Company street address</label>
+                </field>
+                <field id="company_city" translate="label" type="text" sortOrder="94" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <label>Company city</label>
+                </field>
+                <field id="company_postcode" translate="label" type="text" sortOrder="95" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Company postcode</label>
+                </field>
+                <field id="company_countrycode" translate="label" type="text" sortOrder="96" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Company country code</label>
+                </field>
+                <field id="company_phone" translate="label" type="text" sortOrder="97" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <label>Company phone</label>
+                </field>
+                <!--
+                <field id="pickup_terminal" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Pickup terminal</label>
+                    <source_model>Itella\Shipping\Model\Source\Terminal</source_model>
+                    <depends>
+                        <field id="pickup">PARCEL_TERMINAL</field>
+                    </depends>
+                </field>
+            -->
+                <field id="max_package_weight" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Maximum Package Weight</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="price" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>LT Courier shipping price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="price2" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>LT Parcel terminal shipping price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="priceLV_C" translate="label" type="text" sortOrder="181" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>LV Courier shipping price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="priceLV_pt" translate="label" type="text" sortOrder="181" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>LV Parcel terminal shipping price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="priceEE_C" translate="label" type="text" sortOrder="182" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>EE Courier shipping price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="priceEE_pt" translate="label" type="text" sortOrder="182" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>EE Parcel terminal shipping price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="free_shipping_enable" translate="label" type="select" sortOrder="183" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Free Shipping Amount Threshold</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+                <field id="free_shipping_subtotal" translate="label" type="text" sortOrder="184" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable Free Shipping Threshold</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="free_shipping_enable">1</field>
+                    </depends>
+                </field>
+                <field id="allowed_methods" translate="label" type="multiselect" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Allowed Methods</label>
+                    <source_model>Itella\Shipping\Model\Source\Method</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="specificerrmsg" translate="label" type="textarea" sortOrder="240" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Displayed Error Message</label>
+                </field>
+                <field id="sallowspecific" translate="label" type="select" sortOrder="250" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Ship to Applicable Countries</label>
+                    <frontend_class>shipping-applicable-country</frontend_class>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="260" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Ship to Specific Countries</label>
+                    <source_model>Itella\Shipping\Model\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="showmethod" translate="label" type="select" sortOrder="280" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Show Method if Not Applicable</label>
+                    <frontend_class>shipping-skip-hide</frontend_class>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="290" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Sort Order</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

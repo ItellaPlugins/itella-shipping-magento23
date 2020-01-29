@@ -1,0 +1,143 @@
+
+<?php $items = $this->getOrders();          ?>
+<?php if(count($items)): ?>
+<?php
+//group items by shipping date DESC
+$grouped_items = array();
+foreach ($items as $item){
+  if ($item->getManifestGenerationDate() == NULL)
+    $date = "new";
+  else
+    $date = date('Y-m-d H:i',strtotime($item->getManifestGenerationDate()));
+  if (!isset($grouped_items[$date])) $grouped_items[$date] = array();
+  $grouped_items[$date][] = $item;
+}
+krsort($grouped_items);
+$items_ignore = array();
+?>
+<?php
+$p_limit = 4;
+$total_pages = ceil(count($grouped_items)/$p_limit);
+$current_page = 1;
+
+if (isset($_GET['p']))
+  $current_page = $_GET['p'];
+if ($current_page > $total_pages) $current_page = $total_pages;
+$counter = 0;
+?>
+<?php 
+  if ($total_pages > 1){
+        $data = '<div class="pagination">';
+        $data .= ' <a href="?p=1" style = "padding:5px 8px;border:1px solid #000;">«</a>';
+        $start = 1;
+        if ($current_page > 5) $start = $current_page - 2;
+        $end = $start + 5;
+        if ($end > $total_pages) $end = $total_pages;
+        for ($i = $start; $i <= $end; $i++){
+          $data .= '<a href="?p='.$i.'"  style = "padding:5px 8px;border:1px solid #000;'.($current_page==$i?'background-color:#303030;color:#ffffff;':'').'">'.$i.'</a>';
+        }
+        $data .= '<a href="?p='.$total_pages.'" style = "padding:5px 8px;border:1px solid #000;">»</a>';
+        $data .= '</div>';
+        echo $data;
+      }
+?>
+<?php foreach ($grouped_items as $date=>$orders): ?>
+<?php
+  $counter++;
+  if ($current_page*$p_limit-$p_limit >= $counter) continue;
+  if (($current_page)*$p_limit < $counter) break;
+?>
+<br/>
+<h3><?php echo ($date=="new"?__('New orders'):$date); ?></h3>
+<div class = "grid">
+<table class="data-grid">
+    <thead>
+    <tr >
+      <th class = "data-grid-th"><span class="data-grid-cell-content"><input type = "checkbox"  class = "check-all"/></span></th>
+      <th class = "data-grid-th"><span class="data-grid-cell-content"><?php echo __('Order #');?></span></th>
+      <th class = "data-grid-th"><span class="data-grid-cell-content"><?php echo __('Manifest generation date'); ?></span></th>
+    </tr>
+    </thead>
+    <tbody>
+        <?php $_odd = ''; ?>
+        <?php foreach ($orders as $order): ?>
+        <tr class = "data-row">
+            <?php 
+            $order_items = array();   
+            $ids = $order->getId();
+            ?>
+            <td><div class = "data-grid-cell-content"><input type = "checkbox" name = "items[]" class = "manifest-item" value = "<?php echo $ids; ?>"/></div></td>
+            <td><div class = "data-grid-cell-content"><?php echo $order->getIncrementId(); ?></div></td>
+            <td><div class = "data-grid-cell-content"><?php echo $order->getManifestGenerationDate(); ?></div></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+</div>
+<?php endforeach; ?>
+<?php echo $this->getPagerHtml(); ?>
+<div>
+<br/>
+  <div class="f-left">
+    <form id = "manifest-print-form" action = "<?php echo $this->getUrl('itella/itellamanifest/printmanifest');?>" method = "POST">
+      <?php echo $this->getBlockHtml('formkey')?>
+      </form>
+    <form id = "labels-print-form" action = "<?php echo $this->getUrl('itella/itellamanifest/printlabels');?>" method = "POST">
+      <?php echo $this->getBlockHtml('formkey')?>
+    </form>
+    <button id="submit_manifest_items" title="<?php echo __('Generate manifest');?>" type="button" class="scalable save">
+            <span><span><span><?php echo __('Generate manifest');?></span></span></span>
+    </button>    
+    <button id="submit_manifest_labels" title="<?php echo __('Print labels');?>" type="button" class="scalable save">
+            <span><span><span><?php echo __('Print labels');?></span></span></span>
+    </button>     
+  </div>
+  <div class="f-clear"></div>
+</div>
+<script>
+require(['jquery'],function($){
+$('document').ready(function(){
+  $('#submit_manifest_items').on('click',function(){
+    var ids = "";
+    $('.manifest-item:checked').each(function() {
+      ids += $(this).val()+";";
+      var id = $(this).val();
+       $('#manifest-print-form').append('<input type="hidden" name="order_ids[]" value = "'+id+'" />');
+    });
+    $('#item_ids').val(ids);
+    if (ids == ""){
+      alert('<?php echo __('Select orders'); ?>');
+    } else {
+      $('#manifest-print-form').submit();
+    }
+    //console.log($('#item_ids').val());
+    
+  });
+  
+  $('#submit_manifest_labels').on('click',function(){
+    var ids = "";
+    $('.manifest-item:checked').each(function() {
+      ids += $(this).val()+";";
+      var id = $(this).val();
+       $('#labels-print-form').append('<input type="hidden" name="order_ids[]" value = "'+id+'" />');
+    });
+    if (ids == ""){
+      alert('<?php echo __('Select orders'); ?>');
+    } else {
+      $('#labels-print-form').submit();
+    }
+    //console.log($('#item_ids').val());
+
+  });
+    $('.check-all').on('click',function(){
+      var checked = $(this).prop('checked');
+      $(this).parents('table').find('.manifest-item').each(function() {
+        $(this).prop('checked', checked);
+      });
+    });
+});
+});
+</script>
+<?php else: ?>
+    <p><?php echo __('No assign shipments found'); ?></p>
+<?php endif ?>

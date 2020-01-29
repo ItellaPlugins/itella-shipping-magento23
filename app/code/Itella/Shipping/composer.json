@@ -1,0 +1,17 @@
+{
+    "name": "itella/shipping",
+    "description": "Itella Shipping module",
+    "type": "magento2-module",
+    "authors": [
+        {
+            "name": "Mijora"
+        }
+    ],
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Itella\\Shipping\\": ""
+        }
+    },
+    "version": "1.0.0"
+}

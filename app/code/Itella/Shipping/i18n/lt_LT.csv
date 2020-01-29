@@ -1,0 +1,69 @@
+Enabled for Checkout,Įjungti
+Gateway URL,Serviso URL adresas
+User ID,Vartotojo ID
+Password,Slaptažodis
+Title,Pavadinimas
+Price,Kaina
+Show Method if Not Applicable,"Rodyti siuntimo būdą, jei nėra galimas"
+LT Courier shipping price,LT Kurjerio siuntimo kaina
+LT Parcel terminal shipping price,LT Siuntų terminalo siuntimo kaina
+LV Courier shipping price,LV Kurjerio siuntimo kaina
+LV Parcel terminal shipping price,LV Siuntų terminalo siuntimo kaina
+EE Courier shipping price,EE Kurjerio siuntimo kaina
+EE Parcel terminal shipping price,EE Siuntų terminalo siuntimo kaina
+Pick up time start,Paėmimo pradžios laikas
+Pick up time finish,Paėmimo pabaigos laikas
+Company name,Įmonės pavadinimas
+Bank account number,Banko sąskaitos numeris
+Company street address,Įmonės gatvės adresas
+Company city,Įmonės miestas
+Company postcode,Įmonės pašto kodas
+Company country code,Įmonės šalies kodas (LT)
+Company phone,Įmonės telefono numeris
+Pick up from store type,Paėmimo iš parduotuvės būdas
+Maximum Package Weight,Didžiausias leistinas svoris
+Allowed Methods,Siuntimo būdai
+Displayed Error Message,Klaidos pranešimo tekstas
+Ship to Applicable Countries,Siuntimas į tinkamas šalis
+Ship to Specific Countries,Siuntimas į pasirinktas šalis
+Sort Order,Eiliškumas
+Courier,Kurjeris
+Parcel terminal,Siuntų terminalas
+Yes,Taip
+No,Ne
+All Allowed Countries,Visos galimos šalys
+Specific Countries,Pasirinktos šalys
+Itella manifest,Itella manifestas
+New orders,Nauji užsakymai
+Itella orders,Itella užsakymai
+Order #,Užsakymo #
+Manifest generation date,Manifesto generavimo data
+Generate manifest,Generuoti manifestą
+Print labels,Spausdinti lipdukus
+Select orders,Pasirinkite užsakymus
+Select parcel terminal,Pasirinkite siuntų terminalą
+Please select parcel terminal.,Pasirinkite siuntų terminalą
+Enable,Įjungta
+Disable,Išjungta
+Free Shipping Amount Threshold,Nemokamas siuntimas pagal kainą
+Enable Free Shipping Threshold,Nemokamo siuntimo užsakymo suma
+Itella courier called,Itella kurjeris iškviestas
+Failed to call Itella courier,Itella kurjerio iškviesti nepavyko
+Call Itella,Iškviesti Itella
+Sender Address,Siuntėjo adresas
+Parcel Nr, Siuntos numeris
+Date, Data
+Amount, Kiekis
+Weight, Svoris
+Receiver, Gavėjo adresas
+"Courier full name, signature", "Kurjerio vardas, pavardė, parašas"
+"Sender full name, signature", "Siuntėjo vardas, pavardė, parašas"
+"Select terminal","Pasirinkite paštomatą"
+"Enter postcode / address", "Įveskite pašto kodą / adresą"
+"Enter postcode", "Įveskite paštokodą"
+"Place not found", "Vieta nerasta"
+"Show in map", "Rodyti žemėlapyje"
+"Show more", "Rodyti daugiau"
+"Itella parcel terminals", "Itella paštomatai"
+"Parcel terminals addresses", "Paštomatų adresai"
+"Back to list", "Atgal į sąrašą"

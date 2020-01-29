@@ -1,0 +1,10 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+        <container name="listing_top">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="template" xsi:type="string">ui/grid/toolbar</item>
+                    <item name="stickyTmpl" xsi:type="string">ui/grid/sticky/toolbar</item>
+                </item>
+            </argument>
+        </container>
+    </listing>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="buttons" xsi:type="array">
+            <item name="call_Itella" xsi:type="array">
+                <item name="name" xsi:type="string">call_Itella</item>
+                <item name="label" xsi:type="string" translate="true">Call Itella</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="style" xsi:type="string">background-color:#b3aaaa;</item>
+                <item name="url" xsi:type="string">Itella/order/CallItella</item>
+            </item>
+        </item>
+    </argument>
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="mass_labels">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">mass_labels</item>
+                        <item name="label" xsi:type="string" translate="true">Generate Itella Labels</item>
+                        <item name="url" xsi:type="url" path="Itella/order/printMassLabels"/>
+                    </item>
+                </argument>
+            </action>
+            <action name="mass_manifest">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">mass_manifest</item>
+                        <item name="label" xsi:type="string" translate="true">Generate Itella Manifest</item>
+                        <item name="url" xsi:type="url" path="Itella/order/printMassManifest"/>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>
