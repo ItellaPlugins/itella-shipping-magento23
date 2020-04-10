@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
-    <argument name="data" xsi:type="array">
-        <item name="buttons" xsi:type="array">
-            <item name="call_Itella" xsi:type="array">
-                <item name="name" xsi:type="string">call_Itella</item>
-                <item name="label" xsi:type="string" translate="true">Call Itella</item>
-                <item name="class" xsi:type="string">primary</item>
-                <item name="style" xsi:type="string">background-color:#b3aaaa;</item>
-                <item name="url" xsi:type="string">itella/order/callitella</item>
-            </item>
-        </item>
-    </argument>
     <listingToolbar name="listing_top">
         <massaction name="listing_massaction">
             <action name="mass_labels">
