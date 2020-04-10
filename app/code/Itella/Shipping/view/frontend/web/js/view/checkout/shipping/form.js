@@ -6,9 +6,10 @@ define([
     'Magento_Checkout/js/model/shipping-service',
     'Itella_Shipping/js/view/checkout/shipping/parcel-terminal-service',
     'mage/translate',
+    'mage/url',
     'Itella_Shipping/js/leaflet',
     'Itella_Shipping/js/itella-mapping',
-], function ($, ko, Component, quote, shippingService, parcelTerminalService, t) {
+], function ($, ko, Component, quote, shippingService, parcelTerminalService, t, url) {
     'use strict';
 
     return Component.extend({
@@ -20,66 +21,70 @@ define([
             this.parcelTerminals = ko.observableArray();
             this.selectedParcelTerminal = ko.observable();
             this._super();
-            
-            
+            this.itella = null;
             
         },
         hideSelect: function () {
             var method = quote.shippingMethod();
             var selectedMethod = method != null ? method.carrier_code + '_' + method.method_code : null;
-            if (selectedMethod == 'Itella_PARCEL_TERMINAL') {
-                $('.itella-shipping-container').first().show();
+            //console.log(selectedMethod);
+            if (selectedMethod == 'itella_PARCEL_TERMINAL') {
+                $('#terminal-select-location').show();
             } else {
-                $('.itella-shipping-container').first().hide();
+                $('#terminal-select-location').hide();
+                //console.log('hide');
             }
         },
+        
+        setLogos: function(){
+            var img = '<img src = "'+require.toUrl('Itella_Shipping/images/')+'/logo.png" style = "height:30px;"/>';
+            if ($('#label_carrier_PARCEL_TERMINAL_itella') !== undefined && $('#label_carrier_PARCEL_TERMINAL_itella img').length === 0){
+                $('#label_carrier_PARCEL_TERMINAL_itella').html(img);
+            }
+            if ($('#label_carrier_COURIER_itella') !== undefined && $('#label_carrier_COURIER_itella img').length === 0){
+                $('#label_carrier_COURIER_itella').html(img);
+            }
+        },
+        
         moveSelect: function () {
-          $('#checkout-shipping-method-load input:radio:not(.bound)').addClass('bound').bind('click', this.hideSelect());
-              
-          /*
-            if ($('#onepage-checkout-shipping-method-additional-load .parcel-terminal-list').length > 0){
-                $('#checkout-shipping-method-load input:radio:not(.bound)').addClass('bound').bind('click', this.hideSelect());
-                if ($('#checkout-shipping-method-load .parcel-terminal-list').html() !=  $('#onepage-checkout-shipping-method-additional-load .parcel-terminal-list').html()){
-                    $('#terminal-select-location').remove();
-                }
-                
-                if ($('#checkout-shipping-method-load .parcel-terminal-list').length == 0){
-                    var terminal_list = $('#onepage-checkout-shipping-method-additional-load .Itella-parcel-terminal-list-wrapper div');
-                    var row = $.parseHTML('<tr><td colspan = "4" style = "border-top: none; padding-top: 0px"></td></tr>');
-                    if ($('#s_method_Itella_PARCEL_TERMINAL').length > 0){
-                        var move_after = $('#s_method_Itella_PARCEL_TERMINAL').parents('tr'); 
-                    } else if ($('#label_method_PARCEL_TERMINAL_Itella').length > 0){
-                        var move_after = $('#label_method_PARCEL_TERMINAL_Itella').parents('tr'); 
-                    }
-                    var cloned =  terminal_list.clone(true);
-                    if ($('#terminal-select-location').length == 0){
-                        $('<tr id = "terminal-select-location" ><td colspan = "4" style = "border-top: none; padding-top: 0px"></td></tr>').insertAfter(move_after);
-                    }
-                    cloned.appendTo($('#terminal-select-location td'));
-                }
-            }
+            this.setLogos();
+          //$('#checkout-shipping-method-load input:radio:not(.bound)').addClass('bound').bind('click', this.hideSelect());
             
-            if ($('#terminal-select-location select').val() != last_selected_terminal){
-                $('#terminal-select-location select').val(last_selected_terminal);
-            }
-            */
-            if ($('#s_method_Itella_PARCEL_TERMINAL').length > 0){
-                  var move_after = $('#s_method_Itella_PARCEL_TERMINAL').parents('tr'); 
-              } else if ($('#label_method_PARCEL_TERMINAL_Itella').length > 0){
-                  var move_after = $('#label_method_PARCEL_TERMINAL_Itella').parents('tr'); 
+          
+            if ($('#s_method_itella_PARCEL_TERMINAL').length > 0){
+                  var move_after = $('#s_method_itella_PARCEL_TERMINAL').parents('tr'); 
+              } else if ($('#label_method_PARCEL_TERMINAL_itella').length > 0){
+                  var move_after = $('#label_method_PARCEL_TERMINAL_itella').parents('tr'); 
               }
-              
-              var terminals = this.parcelTerminals();
-            if (terminals.length && move_after !== undefined && $('.itella-shipping-container').length == 0){
+            //$('#terminal-select-location').remove();
+            
+            var terminals = this.parcelTerminals();
+            if ($('#terminal-select-location').length && terminals.length && move_after !== undefined && $('.itella-shipping-container').length == 0){
                 
-              $('<tr id = "terminal-select-location" ><td colspan = "4" style = "border-top: none; padding-top: 0px"><div id = "itella-map"></div></td></tr>').insertAfter(move_after);
-             
-              var itella = new itellaMapping(document.getElementById('itella-map'));
-              itella
+              $('#terminal-select-location').insertAfter(move_after);
+                
+              var btn = $('#shipping-method-buttons-container button.continue');
+              this.itella = new itellaMapping(document.getElementById('itella-map'));
+              this.itella
               // set base url where images are placed
-              .setImagesUrl('images/')
+              .setImagesUrl(require.toUrl('Itella_Shipping/images/'))
               // configure translation
-              .setStrings({nothing_found: 'Nieko nerasta', modal_header: 'Taškai'})
+              .setStrings({
+                  modal_header: $.mage.__('Pickup points'),
+                  selector_header: $.mage.__('Pickup point'),
+                  workhours_header: $.mage.__('Workhours'),
+                  contacts_header: $.mage.__('Contacts'),
+                  search_placeholder: $.mage.__('Enter postcode/address'),
+                  select_pickup_point: $.mage.__('Select a pickup point'),
+                  no_pickup_points: $.mage.__('No points to select'),
+                  select_btn: $.mage.__('select'),
+                  back_to_list_btn: $.mage.__('reset search'),
+                  nothing_found: $.mage.__('Nothing found'),
+                  select_pickup_point_btn: $.mage.__('Select pickup point'),
+                  no_information: $.mage.__('No information'),
+                  error_leaflet: $.mage.__('Leaflet is required for Itella-Mapping'),
+                  error_missing_mount_el: $.mage.__('No mount supplied to itellaShipping')
+              })
               // build HTML and register event handlers
               .init()
 
@@ -90,37 +95,55 @@ define([
               // to register function that does something when point is selected
               .registerCallback(function (manual) {
                 // this gives full access to itella class
-                console.log('is manual', manual); // tells if it was human interaction
+                //console.log('is manual', manual); // tells if it was human interaction
                 // selected point information, null if nothing is selected
-                console.log(this.selectedPoint); 
+                //console.log(this.selectedPoint); 
+                if (!this.selectedPoint){
+                  btn.addClass('disabled');
+                  } else {
+                     btn.removeClass('disabled'); 
+                  }
                 if (quote.shippingAddress().extensionAttributes == undefined) {
                     quote.shippingAddress().extensionAttributes = {};
                 }
-                quote.shippingAddress().extensionAttributes.itella_parcel_terminal = this.selectedPoint.id;
+                quote.shippingAddress().extensionAttributes.itella_parcel_terminal = this.selectedPoint.pupCode;
               });
               if (quote.shippingAddress().extensionAttributes !== undefined && quote.shippingAddress().extensionAttributes.itella_parcel_terminal !== undefined){
-                itella.setSelection(quote.shippingAddress().extensionAttributes.itella_parcel_terminal);
+                this.itella.setSelection(quote.shippingAddress().extensionAttributes.itella_parcel_terminal);
+              }
+              if (!this.itella.selectedPoint){
+                  btn.addClass('disabled');
+              } else {
+                 btn.removeClass('disabled'); 
               }
             }
         },
         initObservable: function () {
             this._super();
             this.showParcelTerminalSelection = ko.computed(function() {
-                this.moveSelect();
+                //this.moveSelect();
                 return this.parcelTerminals().length != 0
             }, this);
 
             this.selectedMethod = ko.computed(function() {
-                this.moveSelect();
+                //this.moveSelect();
                 var method = quote.shippingMethod();
                 var selectedMethod = method != null ? method.carrier_code + '_' + method.method_code : null;
+                if (selectedMethod != 'itella_PARCEL_TERMINAL') {
+                    $('#shipping-method-buttons-container button.continue.disabled').removeClass('disabled');
+                } else if (this.itella){
+                    if (!this.itella.selectedPoint){
+                        $('#shipping-method-buttons-container button.continue').addClass('disabled');
+                    }
+                }
                 return selectedMethod;
+                
             }, this);
 
             quote.shippingMethod.subscribe(function(method) {
                 this.moveSelect();
                 var selectedMethod = method != null ? method.carrier_code + '_' + method.method_code : null;
-                if (selectedMethod == 'Itella_PARCEL_TERMINAL') {
+                if (selectedMethod == 'itella_PARCEL_TERMINAL') {
                     this.reloadParcelTerminals();
                 }
             }, this);
@@ -141,6 +164,7 @@ define([
         setParcelTerminalList: function(list) {
             this.parcelTerminals(list);
             this.moveSelect();
+            
         },
         
         reloadParcelTerminals: function() {

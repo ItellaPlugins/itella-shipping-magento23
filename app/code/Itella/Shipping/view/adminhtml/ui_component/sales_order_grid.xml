@@ -7,7 +7,7 @@
                 <item name="label" xsi:type="string" translate="true">Call Itella</item>
                 <item name="class" xsi:type="string">primary</item>
                 <item name="style" xsi:type="string">background-color:#b3aaaa;</item>
-                <item name="url" xsi:type="string">Itella/order/CallItella</item>
+                <item name="url" xsi:type="string">itella/order/callitella</item>
             </item>
         </item>
     </argument>
@@ -18,7 +18,7 @@
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">mass_labels</item>
                         <item name="label" xsi:type="string" translate="true">Generate Itella Labels</item>
-                        <item name="url" xsi:type="url" path="Itella/order/printMassLabels"/>
+                        <item name="url" xsi:type="url" path="itella/order/printmasslabels"/>
                     </item>
                 </argument>
             </action>
@@ -27,7 +27,7 @@
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">mass_manifest</item>
                         <item name="label" xsi:type="string" translate="true">Generate Itella Manifest</item>
-                        <item name="url" xsi:type="url" path="Itella/order/printMassManifest"/>
+                        <item name="url" xsi:type="url" path="itella/order/printmassmanifest"/>
                     </item>
                 </argument>
             </action>

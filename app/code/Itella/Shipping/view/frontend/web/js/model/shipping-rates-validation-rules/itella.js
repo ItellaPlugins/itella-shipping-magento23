@@ -11,15 +11,9 @@ define(
         return {
             getRules: function () {
                 return {
-                    'postcode': {
-                        'required': false
-                    },
-                    'country_id': {
+                    'pickup_point': {
                         'required': true
                     },
-                    'city': {
-                        'required': false
-                    }
                 };
             }
         };

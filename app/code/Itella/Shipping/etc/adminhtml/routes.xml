@@ -4,5 +4,8 @@
         <route id="itella" frontName="itella">
             <module name="Itella_Shipping" before="Magento_Backend" />
         </route>
+        <route id="itella_tab" frontName="itellatab">
+            <module name="Itella_Shipping" />
+        </route>
     </router>
 </config>

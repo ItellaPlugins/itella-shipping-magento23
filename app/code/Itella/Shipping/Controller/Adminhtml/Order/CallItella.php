@@ -12,7 +12,7 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
 /**
- * Class MassManifest
+ * Class CallItella
  */
 class CallItella extends \Magento\Framework\App\Action\Action
 {
@@ -25,7 +25,6 @@ class CallItella extends \Magento\Framework\App\Action\Action
   }
   public function execute()
   {
-
     $result = $this->Itella_carrier->call_Itella();
     if ($result){
       $text = __('Itella courier called');

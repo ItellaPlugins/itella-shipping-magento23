@@ -2,7 +2,7 @@ class itellaMapping {
   constructor(el) {
 
     /* Itella Mapping version */
-    this.version = '1.0.0';
+    this.version = '1.0.3';
 
     this._isDebug = false;
 
@@ -394,7 +394,10 @@ class itellaMapping {
   }
 
   setSelection(id, manual = false) {
-    let location = this.getLocationById(id);
+    let location = this.getLocationByPupCode(id);
+    if (!location) { // try looking by ID
+      location = this.getLocationById(id);
+    }
 
     if (typeof location !== 'undefined') {
       this.selectedPoint = location;
@@ -453,6 +456,9 @@ class itellaMapping {
     if (location.customerServicePhoneNumber !== null) {
       contactHTML += `<li>${location.customerServicePhoneNumber}</li>`;
     }
+    if (location.additionalInfo !== null) {
+      contactHTML += `<li>${location.additionalInfo}</li>`;
+    }
     contacts.innerHTML = contactHTML;
 
     var drpd = this.UI.modal.querySelector('.itella-select .dropdown');
@@ -478,6 +484,12 @@ class itellaMapping {
     }, this.locations);
   }
 
+  getLocationByPupCode(id) {
+    return this.findLocInArray(function (loc) {
+      return loc.pupCode == id;
+    }, this.locations);
+  }
+
   createElement(tag, classList = []) {
     let el = document.createElement(tag);
     if (classList.length) {
@@ -499,8 +511,9 @@ class itellaMapping {
     });
     this._pickupIcon = new Icon({ iconUrl: this.images_url + 'marker.png' });
 
-    L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.mijora.lt">Mijora</a>'
+    L.tileLayer('https://map.plugins.itella.com/tile/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.mijora.lt">Mijora</a>' +
+        ' | Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
     }).addTo(this._map);
     this._markerLayer = L.featureGroup();
     this._map.addLayer(this._markerLayer);
@@ -603,7 +616,7 @@ class itellaMapping {
 
       /* check if we allready have html object, otherwise create new one */
       let li = Object.prototype.toString.call(loc._li) == '[object HTMLLIElement]' ? loc._li : _this.createElement('li');
-      li.innerHTML = loc.publicName;
+      li.innerHTML = loc.publicName + ', ' + loc.address.address;
       if (typeof loc.distance != 'undefined') {
         let span = _this.createElement('span');
         span.innerText = loc.distance.toFixed(2);

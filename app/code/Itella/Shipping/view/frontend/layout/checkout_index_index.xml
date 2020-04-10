@@ -34,17 +34,6 @@
                                                         </item>
                                                     </item>
                                                 </item>
-                                                <item name="step-config" xsi:type="array">
-                                                    <item name="children" xsi:type="array">
-                                                        <item name="shipping-rates-validation" xsi:type="array">
-                                                            <item name="children" xsi:type="array">
-                                                                <item name="itella-rates-validation" xsi:type="array">
-                                                                    <item name="component" xsi:type="string">Itella_Shipping/js/view/shipping-rates-validation</item>
-                                                                </item>
-                                                            </item>
-                                                        </item>
-                                                    </item>
-                                                </item>
                                             </item>
                                         </item>
                                     </item>

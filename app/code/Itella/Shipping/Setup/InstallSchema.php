@@ -41,6 +41,7 @@ class InstallSchema implements InstallSchemaInterface
             ]
         );
         
+        
         $installer->getConnection()->addColumn(
             $installer->getTable('sales_order'),
             'manifest_generation_date',
@@ -49,6 +50,17 @@ class InstallSchema implements InstallSchemaInterface
                 'length' => 20,
                 'nullable' => true,
                 'comment' => 'Manifest generation date',
+            ]
+        );
+        
+        $installer->getConnection()->addColumn(
+            $installer->getTable('sales_order'),
+            'itella_services',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                'length' => 50,
+                'nullable' => true,
+                'comment' => 'Itella Extra services',
             ]
         );
          

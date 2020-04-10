@@ -1,0 +1,81 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var $block \Magento\Sales\Block\Adminhtml\Order\View\Tab\Info */ ?>
+<?php $_order = $block->getOrder() ?>
+<?php $_orderServices = $_order->getItellaServices(); ?>
+<?php
+    if ($_orderServices == null){
+        $_orderServices = array();
+    } else {
+        $_orderServices = json_decode($_orderServices);
+    }
+?>
+<?php $_isItella = $block->isItellaMethod($_order) ?>
+<div id="order-messages">
+    <?= $block->getChildHtml('order_messages') ?>
+</div>
+
+
+
+<section class="admin__page-section itella-tab-content">
+    <?php if ($_isItella): ?>
+    
+    
+    <?php $_terminal = $block->getTerminal($_order) ?>
+    <div class="admin__page-section-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Itella courrier extra information') ?></span>
+    </div>
+    <div class="admin__field">
+        <div class="order-itella-services-options" id = "itella_services_block">
+            <?php foreach ($this->getServices() as $id => $label): ?>
+            <div class="admin__field admin__field-option">
+                <input name="itella_services[]" type="checkbox" id="service-<?php echo $id; ?>" class="admin__control-checkbox" value="<?php echo $id; ?>" <?php echo (in_array($id,$_orderServices)?'checked="checked"':'');?>>
+                <label class="admin__field-label" for="service-<?php echo $id; ?>"><?php echo $label; ?></label>
+            </div>
+            <?php endforeach; ?>
+            <input type="hidden" name="order_id" value="<?= /* @escapeNotVerified */ $_order->getId() ?>"/>
+        </div>
+        <br/>
+        <div class="order-itella-services-actions">
+            <button id="itella-services-btn" title="Save services" type="button" class="action-default scalable action-save action-secondary" onclick="submitAndReloadArea($('itella_services_block').parentNode, '<?php echo $this->getUrl('itella/order/saveservicesajax'); ?>')" data-ui-id="widget-button-0">
+                <span><?php echo __("Save services"); ?></span>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+    require(['prototype'], function(){
+
+    saveItellaServices = function() {
+        submitAndReloadArea($('itella_services_block').parentNode, '<?= /* @escapeNotVerified */ $block->getSubmitUrl() ?>')
+    }
+
+    if ($('#itella-services-btn')) {
+        $('#itella-services-btn').observe('click', saveItellaServices);
+    }
+
+    });
+    </script>
+    
+    
+    <?php else: ?>
+    
+    <div class="admin__page-section-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Not Itella courrier service') ?></span>
+    </div>
+    
+    <?php endif; ?>
+</section>
+
+
+
+
+
+

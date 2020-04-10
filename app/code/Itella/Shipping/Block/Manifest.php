@@ -15,7 +15,7 @@ class Manifest extends \Magento\Framework\View\Element\Template
     public function getOrders()
     {
       $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-      $collection = $this->_orderCollectionFactory->create()->addFieldToFilter('shipping_method', array('like' => 'Itella_%'))->addFieldToFilter('state',array('neq' => 'canceled'))->load();
+      $collection = $this->_orderCollectionFactory->create()->addFieldToFilter('shipping_method', array('like' => 'itella_%'))->addFieldToFilter('state',array('neq' => 'canceled'))->load();
       //$this->orderCollectionFactory->addFieldToFilter($field, $condition);
       return $collection;
     }

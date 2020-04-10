@@ -1,6 +1,6 @@
 Enabled for Checkout,Įjungti
 Gateway URL,Serviso URL adresas
-User ID,Vartotojo ID
+User,Vartotojas
 Password,Slaptažodis
 Title,Pavadinimas
 Price,Kaina
@@ -28,7 +28,7 @@ Ship to Applicable Countries,Siuntimas į tinkamas šalis
 Ship to Specific Countries,Siuntimas į pasirinktas šalis
 Sort Order,Eiliškumas
 Courier,Kurjeris
-Parcel terminal,Siuntų terminalas
+Parcel terminal,Atsiėmimo taškai
 Yes,Taip
 No,Ne
 All Allowed Countries,Visos galimos šalys
@@ -58,12 +58,15 @@ Weight, Svoris
 Receiver, Gavėjo adresas
 "Courier full name, signature", "Kurjerio vardas, pavardė, parašas"
 "Sender full name, signature", "Siuntėjo vardas, pavardė, parašas"
-"Select terminal","Pasirinkite paštomatą"
-"Enter postcode / address", "Įveskite pašto kodą / adresą"
-"Enter postcode", "Įveskite paštokodą"
-"Place not found", "Vieta nerasta"
-"Show in map", "Rodyti žemėlapyje"
-"Show more", "Rodyti daugiau"
-"Itella parcel terminals", "Itella paštomatai"
-"Parcel terminals addresses", "Paštomatų adresai"
-"Back to list", "Atgal į sąrašą"
+Pickup points,Atsiėmimo taškai
+Pickup point,Atsiėmimo taškas
+Workhours,Darbo valandos
+Contacts,Kontaktai
+Enter postcode/address,Įveskite pašto kodą/adresą
+Select a pickup point, Pasirinkti atsiėmimo tašką
+No points to select, Nerasta atsiėmimo taškų
+select,Pasirinkti
+reset search, Atgal į sąrašą
+Nothing found, Nieko nerastas
+Select pickup point, Pasirinkite atsimėmimo tašką
+No information,Nėra informacijos

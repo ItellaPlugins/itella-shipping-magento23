@@ -20,7 +20,7 @@
                                 <item name="shipping-rates-validation" xsi:type="array">
                                     <item name="children" xsi:type="array">
                                         <item name="itella-rates-validation" xsi:type="array">
-                                            <item name="component" xsi:type="string">Itella_Shipping/js/view/shipping-rates-validation</item>
+                                            <item name="component" xsi:type="string">Itella_Shipping/js/view/shipping-rates-validation/itella</item>
                                         </item>
                                     </item>
                                 </item>

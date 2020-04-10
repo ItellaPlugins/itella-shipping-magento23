@@ -8,8 +8,8 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="carriers">
-            <group id="Itella" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Itella</label>
+            <group id="itella" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Itella Shipping</label>
                 <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Enabled for Checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -17,24 +17,26 @@
                 <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Title</label>
                 </field>
-                <field id="is_test" translate="label" type="select" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Test mode</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <field id="user_2317" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API user (2317 Product)</label>
                 </field>
-                <field id="account" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>User</label>
+                <field id="password_2317" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API password (2317 Product)</label>
                 </field>
-                <field id="password" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Password</label>
+                <field id="user_2711" translate="label comment" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API user (2711 Product)</label>
                 </field>
-                <field id="contract" translate="label comment" type="text" sortOrder="42" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Contract</label>
-                </field>
-                <field id="tracking_start" translate="label comment" type="text" sortOrder="43" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Tracking number starts from</label>
+                <field id="password_2711" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API password (2711 Product)</label>
                 </field>
                 <field id="cod_company" translate="label" type="text" sortOrder="91" showInDefault="1" showInWebsite="1" showInStore="0" >
                     <label>Company name</label>
+                </field>
+                <field id="company_email" translate="label" type="text" sortOrder="91" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <label>Company email</label>
+                </field>
+                <field id="courier_email" translate="label" type="text" sortOrder="91" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <label>Courier email</label>
                 </field>
                 <field id="cod_bank_account" translate="label" type="text" sortOrder="92" showInDefault="1" showInWebsite="1" showInStore="0" >
                     <label>Bank account number</label>
@@ -89,6 +91,14 @@
                 </field>
                 <field id="priceEE_pt" translate="label" type="text" sortOrder="182" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>EE Parcel terminal shipping price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="priceFI_C" translate="label" type="text" sortOrder="182" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FI Courier shipping price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="priceFI_pt" translate="label" type="text" sortOrder="182" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FI Parcel terminal shipping price</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
                 <field id="free_shipping_enable" translate="label" type="select" sortOrder="183" showInDefault="1" showInWebsite="1" showInStore="0">
