@@ -9,5 +9,8 @@
                 </action>
             </referenceBlock>
         </referenceContainer>
+        <referenceBlock name="order_additional_info">
+            <block class="Itella\Shipping\Block\Adminhtml\Sales\Terminal" name="itella_terminal" template="order/view/terminal.phtml" />
+        </referenceBlock>
     </body>
 </page>

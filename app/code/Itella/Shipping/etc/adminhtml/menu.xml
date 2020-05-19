@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Itella_Shipping::manifest" title="Itella manifest" parent = "Magento_Sales::sales_operation" module="Itella_Shipping" action="itella/itellamanifest/index" sortOrder="51" resource="Magento_Sales::sales_operation"/>
+        <add id="Itella_Shipping::manifest" title="Itella shipping" parent = "Magento_Sales::sales_operation" module="Itella_Shipping" action="itella/itellamanifest/index" sortOrder="51" resource="Magento_Sales::sales_operation"/>
     </menu>
 </config>

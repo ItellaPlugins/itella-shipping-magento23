@@ -128,7 +128,6 @@ class PrintMassManifest extends \Magento\Sales\Controller\Adminhtml\Order\Abstra
             $street = $shippingAddress->getStreet();
             $parcel_terminal_address = '';
             if (strtoupper($order->getData('shipping_method')) == strtoupper('Itella_PARCEL_TERMINAL')) {
-                $shippingAddress = $order->getShippingAddress();
                 $terminal_id = $shippingAddress->getItellaParcelTerminal();
                 $parcel_terminal = $this->Itella_carrier->_getItellaTerminal($terminal_id, $shippingAddress->getCountryId());
                 if ($parcel_terminal) {

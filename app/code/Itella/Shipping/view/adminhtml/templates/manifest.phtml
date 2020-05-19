@@ -61,6 +61,8 @@
                     <tr >
                         <th class = "data-grid-th"><span class="data-grid-cell-content"><input type = "checkbox"  class = "check-all"/></span></th>
                         <th class = "data-grid-th"><span class="data-grid-cell-content"><?php echo __('Order #'); ?></span></th>
+                        <th class = "data-grid-th"><span class="data-grid-cell-content"><?php echo __('Order status'); ?></span></th>
+                        <th class = "data-grid-th"><span class="data-grid-cell-content"><?php echo __('Address'); ?></span></th>
                         <th class = "data-grid-th">
                             <span class="data-grid-cell-content">
                             <?php echo __('Manifest generation date'); ?>
@@ -84,6 +86,15 @@
             ?>
                             <td><div class = "data-grid-cell-content"><input type = "checkbox" name = "items[]" class = "manifest-item" value = "<?php echo $ids; ?>"/></div></td>
                             <td><div class = "data-grid-cell-content"><?php echo $order->getIncrementId(); ?></div></td>
+                            <td><div class = "data-grid-cell-content"><?php echo ucfirst($order->getStatus()); ?></div></td>
+                            <td>
+                                <div class = "data-grid-cell-content">
+                                <?php 
+                                echo $this->getOrderAddress($order);
+                                ?>
+                                </div>
+                            </td>
+                            
                             <td><div class = "data-grid-cell-content"><?php echo $order->getManifestGenerationDate(); ?></div></td>
                         </tr>
         <?php endforeach; ?>

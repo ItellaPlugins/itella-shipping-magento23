@@ -59,10 +59,19 @@ define([
             //$('#terminal-select-location').remove();
             
             var terminals = this.parcelTerminals();
-            if ($('#terminal-select-location').length && terminals.length && move_after !== undefined && $('.itella-shipping-container').length == 0){
+            if ( terminals.length && move_after !== undefined && $('.itella-shipping-container').length == 0){
                 
-              $('#terminal-select-location').insertAfter(move_after);
-                
+              //$('#itella-helper-container .terminal-select-location').insertAfter(move_after);
+              let row = $('<tr/>');
+              let col = $('<td/>', {colspan: "4"});
+              let div = $('<div/>', {id: "itella-map" });
+              col.append(div);
+              row.append(col);
+              //row.after(move_after);
+              let map_container = $('.terminal-select-location.helper').clone();
+              map_container.removeClass('helper').attr('id','itella-map-container').find('.itella-map').attr('id','itella-map');
+              map_container.insertAfter(move_after);
+              
               var btn = $('#shipping-method-buttons-container button.continue');
               this.itella = new itellaMapping(document.getElementById('itella-map'));
               this.itella
@@ -116,6 +125,8 @@ define([
               } else {
                  btn.removeClass('disabled'); 
               }
+            } else {
+                console.log("Itella map not loaded");
             }
         },
         initObservable: function () {
@@ -131,7 +142,9 @@ define([
                 var selectedMethod = method != null ? method.carrier_code + '_' + method.method_code : null;
                 if (selectedMethod != 'itella_PARCEL_TERMINAL') {
                     $('#shipping-method-buttons-container button.continue.disabled').removeClass('disabled');
+                    $('#itella-map-container').hide();
                 } else if (this.itella){
+                    $('#itella-map-container').show();
                     if (!this.itella.selectedPoint){
                         $('#shipping-method-buttons-container button.continue').addClass('disabled');
                     }
