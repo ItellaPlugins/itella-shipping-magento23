@@ -8,6 +8,7 @@ define([
     'mage/translate',
     'mage/url',
     'Itella_Shipping/js/leaflet',
+    'Itella_Shipping/js/leaflet.markercluster',
     'Itella_Shipping/js/itella-mapping',
 ], function ($, ko, Component, quote, shippingService, parcelTerminalService, t, url) {
     'use strict';

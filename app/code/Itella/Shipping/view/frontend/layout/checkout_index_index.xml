@@ -7,8 +7,10 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
+        <css src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" src_type="url"/>
+        <css src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" src_type="url"/>
+        <css src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" src_type="url"/>
         <css src="Itella_Shipping::css/itella-mapping.css" />
-        <css src="Itella_Shipping::css/leaflet.css" />
     </head>
     <body>
         <referenceBlock name="checkout.root">
