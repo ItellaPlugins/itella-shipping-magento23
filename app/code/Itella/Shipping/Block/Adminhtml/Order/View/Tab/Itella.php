@@ -59,10 +59,10 @@ class Itella extends \Magento\Backend\Block\Template implements \Magento\Backend
 
     public function getServices(){
         return array('3101'=>__("Cash On Delivery"),
-        '3102' => __("Multi Parcel"),
         '3104' => __("Fragile"),
         '3166' => __("Call before Delivery"),
-        '3174' => __("Oversized"));
+        '3174' => __("Oversized"),
+        '3102' => __("Multi Parcel"));
     }
     
     public function isItellaMethod($order)

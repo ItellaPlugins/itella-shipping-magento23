@@ -130,10 +130,11 @@
             $('document').ready(function () {
                 $('#submit_manifest_items').on('click', function () {
                     var ids = "";
+                    $('.hidden-ids').remove();
                     $('.manifest-item:checked').each(function () {
                         ids += $(this).val() + ";";
                         var id = $(this).val();
-                        $('#manifest-print-form').append('<input type="hidden" name="order_ids[]" value = "' + id + '" />');
+                        $('#manifest-print-form').append('<input type="hidden" class = "hidden-ids" name="order_ids[]" value = "' + id + '" />');
                     });
                     $('#item_ids').val(ids);
                     if (ids == "") {
@@ -147,10 +148,11 @@
 
                 $('#submit_manifest_labels').on('click', function () {
                     var ids = "";
+                    $('.hidden-ids').remove();
                     $('.manifest-item:checked').each(function () {
                         ids += $(this).val() + ";";
                         var id = $(this).val();
-                        $('#labels-print-form').append('<input type="hidden" name="order_ids[]" value = "' + id + '" />');
+                        $('#labels-print-form').append('<input type="hidden" class = "hidden-ids" name="order_ids[]" value = "' + id + '" />');
                     });
                     if (ids == "") {
                         alert('<?php echo __('Select orders'); ?>');
