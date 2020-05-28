@@ -12,9 +12,9 @@
 <?php $_orderServices = $_order->getItellaServices(); ?>
 <?php
     if ($_orderServices == null){
-        $_orderServices = array();
+        $_orderServices = array('services'=> array(), 'parcel_count' => '2');
     } else {
-        $_orderServices = json_decode($_orderServices);
+        $_orderServices = json_decode($_orderServices, true);
     }
 ?>
 <?php $_isItella = $block->isItellaMethod($_order) ?>
@@ -36,10 +36,12 @@
         <div class="order-itella-services-options" id = "itella_services_block">
             <?php foreach ($this->getServices() as $id => $label): ?>
             <div class="admin__field admin__field-option">
-                <input name="itella_services[]" type="checkbox" id="service-<?php echo $id; ?>" class="admin__control-checkbox" value="<?php echo $id; ?>" <?php echo (in_array($id,$_orderServices)?'checked="checked"':'');?>>
+                <input name="itella_services[]" type="checkbox" id="service-<?php echo $id; ?>" class="admin__control-checkbox" value="<?php echo $id; ?>" <?php echo (isset($_orderServices['services']) && in_array($id,$_orderServices['services'])?'checked="checked"':'');?>>
                 <label class="admin__field-label" for="service-<?php echo $id; ?>"><?php echo $label; ?></label>
             </div>
             <?php endforeach; ?>
+            <input type = "number" min = "2" max  = "10" name = "parcel_count" placeholder = "Parcel count" value = "<?php echo (isset($_orderServices['parcel_count'])?$_orderServices['parcel_count']:'2'); ?>"/>
+            
             <input type="hidden" name="order_id" value="<?= /* @escapeNotVerified */ $_order->getId() ?>"/>
         </div>
         <br/>
