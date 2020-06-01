@@ -8,7 +8,6 @@ define([
     'mage/translate',
     'mage/url',
     'Itella_Shipping/js/leaflet',
-    'Itella_Shipping/js/leaflet.markercluster',
     'Itella_Shipping/js/itella-mapping',
 ], function ($, ko, Component, quote, shippingService, parcelTerminalService, t, url) {
     'use strict';
@@ -51,7 +50,6 @@ define([
             this.setLogos();
           //$('#checkout-shipping-method-load input:radio:not(.bound)').addClass('bound').bind('click', this.hideSelect());
             
-          
             if ($('#s_method_itella_PARCEL_TERMINAL').length > 0){
                   var move_after = $('#s_method_itella_PARCEL_TERMINAL').parents('tr'); 
               } else if ($('#label_method_PARCEL_TERMINAL_itella').length > 0){
@@ -126,6 +124,7 @@ define([
               } else {
                  btn.removeClass('disabled'); 
               }
+              
             } else {
                 console.log("Itella map not loaded");
             }
@@ -155,7 +154,8 @@ define([
             }, this);
 
             quote.shippingMethod.subscribe(function(method) {
-                this.moveSelect();
+                //this.moveSelect();
+                this.setLogos();
                 var selectedMethod = method != null ? method.carrier_code + '_' + method.method_code : null;
                 if (selectedMethod == 'itella_PARCEL_TERMINAL') {
                     this.reloadParcelTerminals();
@@ -183,7 +183,7 @@ define([
         
         reloadParcelTerminals: function() {
             parcelTerminalService.getParcelTerminalList(quote.shippingAddress(), this, 1);
-            this.moveSelect();
+            //this.moveSelect();
         },
 
         getParcelTerminal: function() {
