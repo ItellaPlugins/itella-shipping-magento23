@@ -58,6 +58,9 @@ Weight, Svoris
 Receiver, Gavėjo adresas
 "Courier full name, signature", "Kurjerio vardas, pavardė, parašas"
 "Sender full name, signature", "Siuntėjo vardas, pavardė, parašas"
+"name, lastname, signature", "vardas, pavardė, parašas"
+Courier,Kurjerio
+Sender,Siuntėjo
 Pickup points,Atsiėmimo taškai
 Pickup point,Atsiėmimo taškas
 Workhours,Darbo valandos
@@ -70,3 +73,5 @@ reset search, Atgal į sąrašą
 Nothing found, Nieko nerastas
 Select pickup point, Pasirinkite atsimėmimo tašką
 No information,Nėra informacijos
+"Itella courier","Itella pristatymas į nurodytą adresą"
+"Itella pickup point","Itella pristatymas į atsiėmimo tašką"

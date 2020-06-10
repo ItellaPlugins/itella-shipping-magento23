@@ -45,6 +45,18 @@
         echo $data;
     }
     ?>
+    <div>
+        <br/>
+        <div class="f-left">
+            <button id="submit_manifest_items2" title="<?php echo __('Generate manifest'); ?>" type="button" class="scalable save">
+                <span><span><span><?php echo __('Generate manifest'); ?></span></span></span>
+            </button>    
+            <button id="submit_manifest_labels2" title="<?php echo __('Print labels'); ?>" type="button" class="scalable save">
+                <span><span><span><?php echo __('Print labels'); ?></span></span></span>
+            </button>     
+        </div>
+        <div class="f-clear"></div>
+    </div>
     <?php foreach ($grouped_items as $date => $orders): ?>
         <?php
         $counter++;
@@ -63,6 +75,7 @@
                         <th class = "data-grid-th"><span class="data-grid-cell-content"><?php echo __('Order #'); ?></span></th>
                         <th class = "data-grid-th"><span class="data-grid-cell-content"><?php echo __('Order status'); ?></span></th>
                         <th class = "data-grid-th"><span class="data-grid-cell-content"><?php echo __('Address'); ?></span></th>
+                        <th class = "data-grid-th"><span class="data-grid-cell-content"><?php echo __('Tracking number'); ?></span></th>
                         <th class = "data-grid-th">
                             <span class="data-grid-cell-content">
                             <?php echo __('Manifest generation date'); ?>
@@ -94,7 +107,13 @@
                                 ?>
                                 </div>
                             </td>
-                            
+                            <td>
+                                <div class = "data-grid-cell-content">
+                                <?php 
+                                echo $this->getOrderTracking($order);
+                                ?>
+                                </div>
+                            </td>
                             <td><div class = "data-grid-cell-content"><?php echo $order->getManifestGenerationDate(); ?></div></td>
                         </tr>
         <?php endforeach; ?>
@@ -128,7 +147,7 @@
     <script>
         require(['jquery'], function ($) {
             $('document').ready(function () {
-                $('#submit_manifest_items').on('click', function () {
+                $('#submit_manifest_items, #submit_manifest_items2').on('click', function () {
                     var ids = "";
                     $('.hidden-ids').remove();
                     $('.manifest-item:checked').each(function () {
@@ -146,7 +165,7 @@
 
                 });
 
-                $('#submit_manifest_labels').on('click', function () {
+                $('#submit_manifest_labels, #submit_manifest_labels2').on('click', function () {
                     var ids = "";
                     $('.hidden-ids').remove();
                     $('.manifest-item:checked').each(function () {

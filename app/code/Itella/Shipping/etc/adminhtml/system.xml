@@ -23,11 +23,17 @@
                 <field id="password_2317" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>API password (2317 Product)</label>
                 </field>
+                <field id="itella_contract_2317" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Contract (2317 Product)</label>
+                </field>
                 <field id="user_2711" translate="label comment" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>API user (2711 Product)</label>
                 </field>
                 <field id="password_2711" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>API password (2711 Product)</label>
+                </field>
+                <field id="itella_contract_2711" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Contract (2711 Product)</label>
                 </field>
                 <field id="cod_company" translate="label" type="text" sortOrder="91" showInDefault="1" showInWebsite="1" showInStore="0" >
                     <label>Company name</label>

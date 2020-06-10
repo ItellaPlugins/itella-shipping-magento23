@@ -331,8 +331,8 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
 
         $codes = [
             'method' => [
-                'COURIER' => __('Courier'),
-                'PARCEL_TERMINAL' => __('Parcel terminal'),
+                'COURIER' => __('Itella courier'),
+                'PARCEL_TERMINAL' => __('Itella pickup point'),
             ],
             'country' => [
                 'EE' => __('Estonia'),
@@ -432,16 +432,16 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
         }
 
         $translation = array(
-            'sender_address' => 'Siuntėjo adresas:',
-            'nr' => 'Nr.',
-            'track_num' => 'Siuntos numeris',
-            'date' => 'Data',
-            'amount' => 'Kiekis',
-            'weight' => 'Svoris (kg)',
-            'delivery_address' => 'Pristatymo adresas',
-            'courier' => 'Kurjerio',
-            'sender' => 'Siuntėjo',
-            'name_lastname_signature' => 'vardas, pavardė, parašas',
+            'sender_address' => __('Sender address'),
+            'nr' => __('No.'),
+            'track_num' => __('Tracking number'),
+            'date' => __('Date'),
+            'amount' => __('Amount'),
+            'weight' => __('Weight').'(kg)',
+            'delivery_address' => __('Delivery address'),
+            'courier' => __('Courier'),
+            'sender' => __('Sender'),
+            'name_lastname_signature' => __('name, lastname, signature')
         );
 
         $name = $this->getConfigData('cod_company');
@@ -479,7 +479,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             if ($result) {
                 return true;
             }
-        } catch (ItellaException $e) {
+        } catch (Exception $e) {
             $this->globalErrors[] = 'Failed to send email, reason: ' . $e->getMessage();
         }
         return false;
@@ -487,14 +487,23 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
 
     protected function _getItellaSender(\Magento\Framework\DataObject $request) {
         try {
+            $contract = '';
+            if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_PICKUP) {
+                $contract = $this->getConfigData('itella_contract_2711');
+            }
+            if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_COURIER) {
+                $contract = $this->getConfigData('itella_contract_2317');
+            }
             $sender = new \Mijora\Itella\Shipment\Party(\Mijora\Itella\Shipment\Party::ROLE_SENDER);
             $sender
+                    ->setContract($contract)  
                     ->setName1($this->getConfigData('cod_company'))
                     ->setStreet1($this->getConfigData('company_address'))
                     ->setPostCode($this->getConfigData('company_postcode'))
                     ->setCity($this->getConfigData('company_city'))
                     ->setCountryCode($this->getConfigData('company_countrycode'))
-                    ->setContactMobile($this->getConfigData('company_phone'));
+                    ->setContactMobile($this->getConfigData('company_phone'))
+                    ->setContactEmail($this->getConfigData('company_email'));
         } catch (ItellaException $e) {
             $this->globalErrors[] = $e->getMessage();
         }
@@ -514,8 +523,8 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                     ->setCountryCode($request->getRecipientAddressCountryCode())
                     ->setContactName($request->getRecipientContactPersonName())
                     ->setContactMobile($request->getRecipientContactPhoneNumber())
-                    ->setContactEmail($request->getOrderShipment()->getOrder()->getShippingAddress()->getData('email'));
-        } catch (ItellaException $e) {
+                    ->setContactEmail($request->getOrderShipment()->getOrder()->getCustomerEmail());
+        } catch (Exception $e) {
             $this->globalErrors[] = $e->getMessage();
         }
         return $receiver;
@@ -539,6 +548,18 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
         }
         $this->globalErrors[] = "Required terminal not found. Terminal ID: " . $id;
         return false;
+    }
+    
+    static public function _getItellaTerminals($countryCode) {
+        $locationFile = Dir::MODULE_ETC_DIR. 'Itella_Shipping' . '/location_' . strtolower($countryCode) . '.json';
+        $terminals = array();
+        if (file_exists($locationFile)) {
+            $terminals = json_decode(file_get_contents($locationFile), true);
+        } else {
+            $itellaPickupPointsObj = new \Mijora\Itella\Locations\PickupPoints('https://locationservice.posti.com/api/2/location');
+            $terminals = $itellaPickupPointsObj->getLocationsByCountry($countryCode);
+        }
+        return $terminals;
     }
 
     protected function _getItellaServices(\Magento\Framework\DataObject $request) {
@@ -596,7 +617,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                     $service = new AdditionalService(AdditionalService::OVERSIZED);
                     $services[] = $service;
                 }
-            } catch (ItellaException $e) {
+            } catch (Exception $e) {
                 $this->globalErrors[] = $e->getMessage();
             }
         }
@@ -640,7 +661,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                 $item->setGrossWeight($total_weight);
                 $items[] = $item;
             }
-        } catch (ItellaException $e) {
+        } catch (Exception $e) {
             $this->globalErrors[] = $e->getMessage();
         }
         return $items;
@@ -682,6 +703,10 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             $receiver = $this->_getItellaReceiver($request);
             $items = $this->_getItellaItems($request);
             $services = $this->_getItellaServices($request);
+            
+            if (!empty($this->globalErrors)) {
+                throw new \Exception('Error: Order '.$request->getOrderShipment()->getOrder()->getIncrementId().' has errors.');
+            }
 
             if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_PICKUP) {
                 $shipment = new \Mijora\Itella\Shipment\Shipment($this->getConfigData('user_2711'), $this->getConfigData('password_2711'));
@@ -701,7 +726,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                     ->addGoodsItems($items); // array of previously created GoodsItem objects, can also be just GoodsItem onject
 
             $tracking_number = $shipment->registerShipment();
-        } catch (ItellaException $e) {
+        } catch (Exception $e) {
             $this->globalErrors[] = $e->getMessage();
         }
 

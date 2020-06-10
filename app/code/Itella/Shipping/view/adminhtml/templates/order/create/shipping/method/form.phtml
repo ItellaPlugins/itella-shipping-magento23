@@ -1,0 +1,28 @@
+<?php $locs = $this->getTerminals(); ?>
+<?php $current_terminal = $this->getCurrentTerminal(); ?>
+<select name = "order[itella_pickup_point]" id = "itella_parcel_terminal_list" onchange="order.setParcelTerminal(this.value)" style = "width:100%; display: none;">
+                          <option value = "">Select pickup point</option>
+                          <?php
+                          $grouped_options = array();
+                          
+                          foreach ($locs as $loc){
+                            $key = $loc['pupCode'];
+                            if (!isset($grouped_options[$loc['address']['municipality']]))
+                              $grouped_options[$loc['address']['municipality']] = array();
+                            $grouped_options[(string)$loc['address']['municipality']][(string)$key] = $loc;
+                            
+                         }
+                         ksort($grouped_options);
+                          foreach ($grouped_options as $city=>$locs){
+                            echo '<optgroup label = "'.$city.'">';
+                            foreach ($locs as $key=>$loc){
+                              echo '<option value = "'.$key.'" '.($key == $current_terminal?'selected':'').'>'.$loc['publicName'].', '. $loc['address']['address'] .'</option>';
+                            }
+                            echo '</optgroup>';
+                          }
+                          ?>
+                        </select>
+<script>     
+jQuery('#itella_parcel_terminal_list').insertAfter(jQuery('#s_method_itella_PARCEL_TERMINAL').parent()).show();
+
+</script>                   

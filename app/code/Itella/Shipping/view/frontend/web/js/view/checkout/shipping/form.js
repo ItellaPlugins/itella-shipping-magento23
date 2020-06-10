@@ -37,12 +37,17 @@ define([
         },
         
         setLogos: function(){
-            var img = '<img src = "'+require.toUrl('Itella_Shipping/images/')+'/logo.png" style = "height:30px;"/>';
-            if ($('#label_carrier_PARCEL_TERMINAL_itella') !== undefined && $('#label_carrier_PARCEL_TERMINAL_itella img').length === 0){
-                $('#label_carrier_PARCEL_TERMINAL_itella').html(img);
-            }
-            if ($('#label_carrier_COURIER_itella') !== undefined && $('#label_carrier_COURIER_itella img').length === 0){
-                $('#label_carrier_COURIER_itella').html(img);
+            if ($('#checkout-shipping-method-load').length != 0){
+                var img = '<img src = "'+require.toUrl('Itella_Shipping/images/')+'/logo.png" style = "height:30px;"/>';
+                if ($('#label_carrier_PARCEL_TERMINAL_itella') !== undefined && $('#label_carrier_PARCEL_TERMINAL_itella img').length === 0){
+                    $('#label_carrier_PARCEL_TERMINAL_itella').html(img);
+                }
+                if ($('#label_carrier_COURIER_itella') !== undefined && $('#label_carrier_COURIER_itella img').length === 0){
+                    $('#label_carrier_COURIER_itella').html(img);
+                }
+            } else {
+                var that = this;
+                setInterval(function(){ that.setLogos();}, 500);
             }
         },
         
@@ -58,7 +63,9 @@ define([
             //$('#terminal-select-location').remove();
             
             var terminals = this.parcelTerminals();
-            if ( terminals.length && move_after !== undefined && $('.itella-shipping-container').length == 0){
+            if ( terminals.length && move_after !== undefined){
+                
+                if ($('.itella-shipping-container').length == 0){
                 
               //$('#itella-helper-container .terminal-select-location').insertAfter(move_after);
               let row = $('<tr/>');
@@ -124,9 +131,11 @@ define([
               } else {
                  btn.removeClass('disabled'); 
               }
-              
+                }
             } else {
                 console.log("Itella map not loaded");
+                var that = this;
+                setInterval(function(){ that.moveSelect();}, 1000);
             }
         },
         initObservable: function () {
@@ -135,7 +144,6 @@ define([
                 //this.moveSelect();
                 return this.parcelTerminals().length != 0
             }, this);
-
             this.selectedMethod = ko.computed(function() {
                 //this.moveSelect();
                 var method = quote.shippingMethod();

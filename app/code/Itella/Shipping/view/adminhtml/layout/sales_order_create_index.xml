@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <referenceContainer name="js">
+            <block class="Magento\Backend\Block\Template" template="Itella_Shipping::order/create/js.phtml" name="itella_shipping_order_js"/>
+     </referenceContainer>
+    <body>
+        <referenceBlock name="shipping_method">
+            <block class="Itella\Shipping\Block\Adminhtml\Order\Create\Shipping\Method\Form" template="Itella_Shipping::order/create/shipping/method/form.phtml" name="itella_shipping_order_create_shipping_form"/>
+        </referenceBlock>
+    </body>
+</page>

@@ -34,6 +34,15 @@ class Manifest extends \Magento\Framework\View\Element\Template {
             $client_address = '';
         return $client_address . $parcel_terminal_address;
     }
+    
+    public function getOrderTracking($order) {
+        $tracksCollection = $order->getTracksCollection();
+        $trackNumbers = array();
+        foreach ($tracksCollection->getItems() as $track) {
+             $trackNumbers[] = $track->getTrackNumber();
+        }
+        return implode(' ', $trackNumbers );
+    }
 
     public function getOrders() {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();

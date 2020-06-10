@@ -146,17 +146,23 @@ class PrintMassManifest extends \Magento\Sales\Controller\Adminhtml\Order\Abstra
             );
             $items[] = $item;
         }
+        if (count($items) === 0){
+            $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+            $resultRedirect->setUrl($this->_redirect->getRefererUrl());
+            return $resultRedirect;
+        }
+        
         $translation = array(
-            'sender_address' => 'Siuntėjo adresas:',
-            'nr' => 'Nr.',
-            'track_num' => 'Siuntos numeris',
-            'date' => 'Data',
-            'amount' => 'Kiekis',
-            'weight' => 'Svoris (kg)',
-            'delivery_address' => 'Pristatymo adresas',
-            'courier' => 'Kurjerio',
-            'sender' => 'Siuntėjo',
-            'name_lastname_signature' => 'vardas, pavardė, parašas',
+            'sender_address' => __('Sender address'),
+            'nr' => __('No.'),
+            'track_num' => __('Tracking number'),
+            'date' => __('Date'),
+            'amount' => __('Amount'),
+            'weight' => __('Weight').'(kg)',
+            'delivery_address' => __('Delivery address'),
+            'courier' => __('Courier'),
+            'sender' => __('Sender'),
+            'name_lastname_signature' => __('name, lastname, signature'),
         );
 
         /*
