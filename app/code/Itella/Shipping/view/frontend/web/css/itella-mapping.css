@@ -14,7 +14,7 @@
 .itella-shipping-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 12px;
 }
@@ -50,6 +50,8 @@
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
 }
 .itella-mapping-modal h2,
 .itella-mapping-modal h3,
@@ -80,11 +82,13 @@
 .itella-container .close-modal img {
   width: 100%!important;
   height: 100%;
-  filter: opacity(0.6);
+  -webkit-filter: opacity(0.6);
+          filter: opacity(0.6);
 }
 
 .itella-container .close-modal:hover img {
-  filter: opacity(0.8);
+  -webkit-filter: opacity(0.8);
+          filter: opacity(0.8);
 }
 
 .itella-map {
@@ -264,7 +268,9 @@
 .itella-select .search-bar .search-input {
   width: 100%;
   background-color: transparent;
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   outline: none;
   border: none;
   font: unset;
@@ -328,6 +334,14 @@
 }
 
 /* Map Markers */
+@-webkit-keyframes bounce {
+  from {
+    top: 0px;
+  }
+  to {
+    top: -10px;
+  }
+}
 @keyframes bounce {
   from {
     top: 0px;
@@ -338,8 +352,10 @@
 }
 
 .itella-map img.active {
-  filter: hue-rotate(90deg);
-  animation: bounce 0.4s infinite alternate;
+  -webkit-filter: hue-rotate(90deg);
+          filter: hue-rotate(90deg);
+  -webkit-animation: bounce 0.4s infinite alternate;
+          animation: bounce 0.4s infinite alternate;
 }
 
 /**
@@ -373,3 +389,4 @@
     left: 10px;
   }
  }
+/*# sourceMappingURL=itella-mapping.css.map */
