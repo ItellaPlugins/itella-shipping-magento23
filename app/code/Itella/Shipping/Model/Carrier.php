@@ -233,6 +233,11 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             return false;
         }
 
+        $max_weight = $this->getConfigData('max_package_weight');
+        if ($max_weight && $request->getPackageWeight() > $max_weight) {
+            return false;
+        }
+
         $result = $this->_rateFactory->create();
         $packageValue = $request->getBaseCurrency()->convert($request->getPackageValueWithDiscount(), $request->getPackageCurrency());
         $packageValue = $request->getPackageValueWithDiscount();
