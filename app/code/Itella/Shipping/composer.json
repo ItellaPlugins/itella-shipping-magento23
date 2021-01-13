@@ -1,6 +1,6 @@
 {
     "name": "itella/shipping",
-    "description": "Itella Shipping module",
+    "description": "Smartpost Itella Shipping module",
     "type": "magento2-module",
     "authors": [
         {

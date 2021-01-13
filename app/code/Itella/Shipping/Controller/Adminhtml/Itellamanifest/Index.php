@@ -19,7 +19,7 @@ class Index extends  \Magento\Backend\App\Action
   {
 
       $resultPage = $this->resultPageFactory->create();
-      $resultPage->getConfig()->getTitle()->prepend(__('Itella manifest'));
+      $resultPage->getConfig()->getTitle()->prepend(__('Smartpost manifest'));
 
       return $resultPage;
   }

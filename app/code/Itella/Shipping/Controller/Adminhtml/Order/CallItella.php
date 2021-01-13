@@ -27,10 +27,10 @@ class CallItella extends \Magento\Framework\App\Action\Action
   {
     $result = $this->Itella_carrier->call_Itella();
     if ($result){
-      $text = __('Itella courier called');
+      $text = __('Smartpost courier called');
       $this->messageManager->addSuccess($text);
     } else {
-      $text = __('Failed to call Itella courier');
+      $text = __('Failed to call Smartpost courier');
       $this->messageManager->addWarning($text);
     }
     $this->_redirect($this->_redirect->getRefererUrl());

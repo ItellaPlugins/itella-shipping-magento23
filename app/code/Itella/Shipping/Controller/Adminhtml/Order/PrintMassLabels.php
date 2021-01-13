@@ -62,7 +62,7 @@ class PrintMassLabels extends \Magento\Sales\Controller\Adminhtml\Order\Abstract
             $pack_no = array();
 
             if (!$this->isItellaMethod($order)) {
-                $text = 'Warning: Order ' . $order->getData('increment_id') . ' not Itella shipping method.';
+                $text = 'Warning: Order ' . $order->getData('increment_id') . ' not Smartpost shipping method.';
                 $this->messageManager->addError($text);
                 continue;
             }
@@ -146,7 +146,7 @@ class PrintMassLabels extends \Magento\Sales\Controller\Adminhtml\Order\Abstract
                 $this->messageManager->addSuccess('Success: Order ' . $order->getData('increment_id') . ' shipment generated');
             }
             $order->setIsInProcess(true);
-            $order->addStatusHistoryComment('Automatically SHIPPED by Itella mass action.', false);
+            $order->addStatusHistoryComment('Automatically SHIPPED by Smartpost mass action.', false);
             $order->save();
         } else {
             $this->messageManager->addWarning('Warning: Order ' . $order->getData('increment_id') . ' is empty or cannot be shipped or has been shipped already');

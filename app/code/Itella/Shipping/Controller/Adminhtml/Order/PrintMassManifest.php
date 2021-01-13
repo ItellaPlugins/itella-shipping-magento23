@@ -67,7 +67,7 @@ class PrintMassManifest extends \Magento\Sales\Controller\Adminhtml\Order\Abstra
             $pack_no = array();
 
             if (!$this->isItellaMethod($order)) {
-                $text = 'Warning: Order ' . $order->getData('increment_id') . ' not Itella shipping method.';
+                $text = 'Warning: Order ' . $order->getData('increment_id') . ' not Smartpost shipping method.';
                 $this->messageManager->addError($text);
                 continue;
             }
