@@ -80,7 +80,7 @@ class Itella extends \Magento\Backend\Block\Template implements \Magento\Backend
      */
     public function getTabLabel()
     {
-        return __('Itella courrier services');
+        return __('Smartpost carrier services');
     }
 
     /**
@@ -88,7 +88,7 @@ class Itella extends \Magento\Backend\Block\Template implements \Magento\Backend
      */
     public function getTabTitle()
     {
-        return __('Itella courrier services');
+        return __('Smartpost carrier services');
     }
 
     /**

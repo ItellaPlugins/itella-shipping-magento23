@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.5] - Unreleased
+### Changed
+- name "Itella" to "Smartpost"
+
+### Updated
+- translations
+
 ## [1.2.4] - 2020-11-26
 ### Added
 - Estonian localization
