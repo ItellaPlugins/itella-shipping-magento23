@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.6] - 2021-01-22
+## Changed
+- applied changes by the itella-api v2.3.1 library
+
 ## [1.2.5] - 2021-01-20
 ### Changed
 - name "Itella" to "Smartpost"
