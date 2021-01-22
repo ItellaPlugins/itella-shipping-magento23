@@ -474,12 +474,16 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                     ->setSenderEmail($this->getConfigData('company_email'))
                     ->setSubject('E-com order booking')
                     ->setPickUpAddress(array(
-                        'sender' => $this->getConfigData('cod_company'),
-                        'address' => $this->getConfigData('company_address') . ', ' . $this->getConfigData('company_postcode') . ', ' . $this->getConfigData('company_city') . ', ' . $this->getConfigData('company_countrycode'),
+                        'sender' => $name,
+                        'address_1' => $street,
+                        'postcode' => $postcode,
+                        'city' => $city,
+                        'country' => $country,
                         'pickup_time' => '8:00 - 17:00',
-                        'contact_phone' => $this->getConfigData('company_phone'),
+                        'contact_phone' => $phone,
                     ))
                     ->setAttachment($manifest_string, true)
+                    ->setItems($items)
                     ->callCourier();
             if ($result) {
                 return true;
