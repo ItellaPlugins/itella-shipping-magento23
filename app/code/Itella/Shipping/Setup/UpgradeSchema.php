@@ -29,6 +29,21 @@ class UpgradeSchema implements UpgradeSchemaInterface
             ]
         );
         */
+        
+        if(version_compare($context->getVersion(), '1.2.7', '<')) {
+
+            $installer->getConnection()->modifyColumn(
+                $installer->getTable( 'sales_order' ),
+               'itella_services',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    'length' => 255,
+                    'nullable' => true,
+                    'comment' => 'Smartpost Extra services',
+                ]
+
+            );
+        }
   
 
         $setup->endSetup();

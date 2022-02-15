@@ -6,4 +6,7 @@
     <extension_attributes for="Magento\Sales\Model\Order">
         <attribute code="manifest_generation_date" type="string"/>
     </extension_attributes>
+    <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
+        <attribute code="smartpost_parcel_terminal" type="string"/>
+    </extension_attributes>
 </config>

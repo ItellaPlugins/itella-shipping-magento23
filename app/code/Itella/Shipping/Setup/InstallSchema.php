@@ -27,7 +27,7 @@ class InstallSchema implements InstallSchemaInterface
             [
                 'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 'nullable' => true,
-                'comment' => 'Itella Parcel Terminal',
+                'comment' => 'Smartpost Parcel Terminal',
             ]
         );
 
@@ -37,7 +37,7 @@ class InstallSchema implements InstallSchemaInterface
             [
                 'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 'nullable' => true,
-                'comment' => 'Itella Parcel Terminal',
+                'comment' => 'Smartpost Parcel Terminal',
             ]
         );
         
@@ -58,9 +58,9 @@ class InstallSchema implements InstallSchemaInterface
             'itella_services',
             [
                 'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                'length' => 50,
+                'length' => 255,
                 'nullable' => true,
-                'comment' => 'Itella Extra services',
+                'comment' => 'Smartpost Extra services',
             ]
         );
          

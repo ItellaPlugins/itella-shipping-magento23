@@ -30,4 +30,7 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="add_custom_field_product_api" type="Itella\Shipping\Plugin\ItellaTerminal"/>
+    </type>
 </config>

@@ -1,6 +1,6 @@
 <?php $locs = $this->getTerminals(); ?>
 <?php $current_terminal = $this->getCurrentTerminal(); ?>
-<select name = "order[itella_pickup_point]" id = "itella_parcel_terminal_list" onchange="order.setParcelTerminal(this.value)" style = "width:100%; display: none;">
+<select name = "order[itella_pickup_point]" id = "itella_parcel_terminal_list" onchange="order.setItellaParcelTerminal(this.value)" style = "width:100%; display: none;">
                           <option value = "">Select pickup point</option>
                           <?php
                           $grouped_options = array();

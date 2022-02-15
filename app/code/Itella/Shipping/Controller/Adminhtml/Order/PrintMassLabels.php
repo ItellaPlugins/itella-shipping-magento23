@@ -85,7 +85,7 @@ class PrintMassLabels extends \Magento\Sales\Controller\Adminhtml\Order\Abstract
     /**
      * Generate ShipmentXML
      *
-     * Test Data if all correct, @return Venipak Lables
+     * Test Data if all correct, @return Itella labels
      */
     public function massAction(AbstractCollection $collection) {
         $pack_data = array();
@@ -144,9 +144,10 @@ class PrintMassLabels extends \Magento\Sales\Controller\Adminhtml\Order\Abstract
                 $this->messageManager->addWarning('Warning: Shipment label not generated for order ' . $order->getData('increment_id'));
             } else {
                 $this->messageManager->addSuccess('Success: Order ' . $order->getData('increment_id') . ' shipment generated');
+                $order->setIsInProcess(true);
+                $order->addStatusHistoryComment('Automatically SHIPPED by Smartpost mass action.', false);
+                $order->setState(Order::STATE_COMPLETE)->setStatus(Order::STATE_COMPLETE);
             }
-            $order->setIsInProcess(true);
-            $order->addStatusHistoryComment('Automatically SHIPPED by Smartpost mass action.', false);
             $order->save();
         } else {
             $this->messageManager->addWarning('Warning: Order ' . $order->getData('increment_id') . ' is empty or cannot be shipped or has been shipped already');
