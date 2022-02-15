@@ -5,7 +5,7 @@ define([
     'use strict';
 
 
-    AdminOrder.prototype.setParcelTerminal  = function(pickup_point) {
+    AdminOrder.prototype.setItellaParcelTerminal = function(pickup_point) {
               var data = {};
               data['order[shipping_method]'] = 'itella_PARCEL_TERMINAL';
               data['order[itella_parcel_terminal]'] = pickup_point;

@@ -718,10 +718,12 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             }
 
             if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_PICKUP) {
+                $terminal_id = $request->getOrderShipment()->getOrder()->getShippingAddress()->getItellaParcelTerminal();
+                $terminal = str_pad($terminal_id, 9, "0", STR_PAD_LEFT);
                 $shipment = new \Mijora\Itella\Shipment\Shipment($this->getConfigData('user_2711'), $this->getConfigData('password_2711'));
                 $shipment
                         ->setProductCode(Shipment::PRODUCT_PICKUP)
-                        ->setPickupPoint($request->getOrderShipment()->getOrder()->getShippingAddress()->getItellaParcelTerminal());
+                        ->setPickupPoint($terminal);
             }
             if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_COURIER) {
                 $shipment = new \Mijora\Itella\Shipment\Shipment($this->getConfigData('user_2317'), $this->getConfigData('password_2317'));
