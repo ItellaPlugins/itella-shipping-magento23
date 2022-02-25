@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.8] - 2021-02-25
+## Changed
+- checkout terminal search API URL update
+
 ## [1.2.7] - 2021-02-15
 ## Changed
 - small bugfixes

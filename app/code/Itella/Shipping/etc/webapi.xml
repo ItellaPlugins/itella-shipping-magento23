@@ -3,7 +3,7 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
 
     <!-- Managing InPost Machines on Checkout page -->
-    <route url="/V1/module/get-parcel-terminal-list/:group/:city/:country" method="GET">
+    <route url="/V1/itella/get-parcel-terminal-list/:group/:city/:country" method="GET">
         <service class="Itella\Shipping\Api\ParcelTerminalManagementInterface" method="fetchParcelTerminals"/>
         <resources>
             <resource ref="anonymous" />
