@@ -6,10 +6,11 @@ define([
     'Magento_Checkout/js/model/shipping-service',
     'Itella_Shipping/js/view/checkout/shipping/parcel-terminal-service',
     'mage/translate',
+    'Itella_Shipping/js/itella-data',
     'mage/url',
     'Itella_Shipping/js/leaflet',
     'Itella_Shipping/js/itella-mapping',
-], function ($, ko, Component, quote, shippingService, parcelTerminalService, t, url) {
+], function ($, ko, Component, quote, shippingService, parcelTerminalService, t, itellaData, url) {
     'use strict';
 
     return Component.extend({
@@ -118,13 +119,15 @@ define([
                   } else {
                      btn.removeClass('disabled'); 
                   }
+                  itellaData.setPickupPoint(this.selectedPoint.pupCode);
+                  /*
                 if (quote.shippingAddress().extensionAttributes == undefined) {
                     quote.shippingAddress().extensionAttributes = {};
                 }
-                quote.shippingAddress().extensionAttributes.itella_parcel_terminal = this.selectedPoint.pupCode;
+                quote.shippingAddress().extensionAttributes.itella_parcel_terminal = this.selectedPoint.pupCode;*/
               });
-              if (quote.shippingAddress().extensionAttributes !== undefined && quote.shippingAddress().extensionAttributes.itella_parcel_terminal !== undefined){
-                this.itella.setSelection(quote.shippingAddress().extensionAttributes.itella_parcel_terminal);
+              if (itellaData.getPickupPoint()){
+                this.itella.setSelection(itellaData.getPickupPoint());
               }
               if (!this.itella.selectedPoint){
                   btn.addClass('disabled');
@@ -135,7 +138,7 @@ define([
             } else {
                 console.log("Itella map not loaded");
                 var that = this;
-                setInterval(function(){ that.moveSelect();}, 1000);
+                setTimeout(function(){ that.moveSelect();}, 1000);
             }
         },
         initObservable: function () {

@@ -15,7 +15,7 @@
     </type>
     
     <type name="Magento\Quote\Model\Quote\Address">
-        <plugin name="parcel-terminal-address" type="Itella\Shipping\Model\Quote\AddressPlugin" sortOrder="1" disabled="false"/>
+        <plugin name="itella-terminal-address" type="Itella\Shipping\Model\Quote\AddressPlugin" sortOrder="1" disabled="false"/>
     </type>
     <!--
     <type name="Magento\Checkout\Model\ShippingInformationManagement">
@@ -31,6 +31,6 @@
         </arguments>
     </type>
     <type name="Magento\Sales\Api\OrderRepositoryInterface">
-        <plugin name="add_custom_field_product_api" type="Itella\Shipping\Plugin\ItellaTerminal"/>
+        <plugin name="add_itella_terminal_to_order" type="Itella\Shipping\Plugin\ItellaTerminal"/>
     </type>
 </config>
