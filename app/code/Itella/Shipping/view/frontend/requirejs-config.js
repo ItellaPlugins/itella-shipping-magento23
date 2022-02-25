@@ -1,7 +1,9 @@
 var config = {
-    "map": {
-        "*": {
-            "Magento_Checkout/js/model/shipping-save-processor/default" : "Itella_Shipping/js/shipping-save-processor-default-override",
+    config: {
+        mixins: {
+            'Magento_Checkout/js/action/set-shipping-information': {
+                'Itella_Shipping/js/action/set-shipping-information-mixin': true
+            }
         }
     }
 };
