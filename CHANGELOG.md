@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.9] - 2021-02-25
+## Updated
+- updated pickup point saving process in checkout
+
 ## [1.2.8] - 2021-02-25
 ## Changed
 - checkout terminal search API URL update
