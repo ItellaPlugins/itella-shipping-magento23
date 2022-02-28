@@ -195,7 +195,7 @@ class PrintMassManifest extends \Magento\Sales\Controller\Adminhtml\Order\Abstra
                 ->printManifest('manifest.pdf');
 
         header("Content-Disposition: attachment; filename=\"Itella_manifest.pdf\"");
-        header('Content-Type', 'application/pdf');
+        header("Content-Type: application/pdf");
         header("Content-Transfer-Encoding: binary");
         // disable caching on client and proxies, if the download content vary
         header("Expires: 0");

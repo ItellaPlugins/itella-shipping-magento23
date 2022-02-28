@@ -111,7 +111,7 @@ class PrintMassLabels extends \Magento\Sales\Controller\Adminhtml\Order\Abstract
             $outputPdf = $this->_combineLabelsPdfZend($this->labelsContent);
             //$outputPdf->Output('Itella_labels.pdf','D');
             header("Content-Disposition: attachment; filename=\"Itella_labels.pdf\"");
-            header('Content-Type', 'application/pdf');
+            header("Content-Type: application/pdf");
             header("Content-Transfer-Encoding: binary");
             // disable caching on client and proxies, if the download content vary
             header("Expires: 0");

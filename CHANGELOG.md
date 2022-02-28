@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.11] - 2021-02-28
+## Updated
+- bugfix in label and manifest printing
+
+## [1.2.10] - 2021-02-25
+## Updated
+- bugfix in label printing
+
 ## [1.2.9] - 2021-02-25
 ## Updated
 - updated pickup point saving process in checkout
