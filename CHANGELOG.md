@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.12] - 2021-04-12
+## Fixed
+- bugfix in Admin REST API
+
 ## [1.2.11] - 2021-02-28
 ## Updated
 - bugfix in label and manifest printing

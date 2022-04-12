@@ -10,10 +10,12 @@ class ItellaTerminal
             \Magento\Sales\Model\Order\Interceptor $order
     ) {
         $shippingAddress = $order->getShippingAddress();
-        $terminal_id = $shippingAddress->getItellaParcelTerminal();
-        $extensionAttributes = $order->getExtensionAttributes();
-        $extensionAttributes->setSmartpostParcelTerminal($terminal_id); // custom field value set
-        $order->setExtensionAttributes($extensionAttributes);
+        if ($shippingAddress) {
+            $terminal_id = $shippingAddress->getItellaParcelTerminal();
+            $extensionAttributes = $order->getExtensionAttributes();
+            $extensionAttributes->setSmartpostParcelTerminal($terminal_id); // custom field value set
+            $order->setExtensionAttributes($extensionAttributes);
+        }
         return $order;
     }
 
@@ -24,10 +26,12 @@ class ItellaTerminal
         $orders = [];
         foreach ($searchCriteria->getItems() as $order) {
             $shippingAddress = $order->getShippingAddress();
-            $terminal_id = $shippingAddress->getItellaParcelTerminal();
-            $extensionAttributes = $order->getExtensionAttributes();
-            $extensionAttributes->setSmartpostParcelTerminal($terminal_id);
-            $order->setExtensionAttributes($extensionAttributes);
+            if ($shippingAddress) {
+                $terminal_id = $shippingAddress->getItellaParcelTerminal();
+                $extensionAttributes = $order->getExtensionAttributes();
+                $extensionAttributes->setSmartpostParcelTerminal($terminal_id);
+                $order->setExtensionAttributes($extensionAttributes);
+            }
         }
         $searchCriteria->setItems($orders);
         return $searchCriteria;
