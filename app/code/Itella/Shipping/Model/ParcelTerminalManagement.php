@@ -14,8 +14,9 @@ class ParcelTerminalManagement implements ParcelTerminalManagementInterface
     protected $parcelTerminalFactory;
 
     /**
-     * OfficeManagement constructor.
-     * @param OfficeInterfaceFactory $officeInterfaceFactory
+     * ParcelTerminalInterfaceFactory constructor.
+     * 
+     * @param ParcelTerminalInterfaceFactory $parcelTerminalInterfaceFactory
      */
     public function __construct(ParcelTerminalInterfaceFactory $parcelTerminalInterfaceFactory)
     {
@@ -25,11 +26,10 @@ class ParcelTerminalManagement implements ParcelTerminalManagementInterface
     /**
      * Get offices for the given postcode and city
      *
-     * @param string $postcode
-     * @param string $limit
-     * @param string $country
      * @param string $group
-     * @return \Itella\Shipping\Api\Data\OfficeInterface[]
+     * @param string $city
+     * @param string $country
+     * @return Array
      */
     public function fetchParcelTerminals($group, $city, $country )
     {

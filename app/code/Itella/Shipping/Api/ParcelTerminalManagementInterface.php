@@ -8,10 +8,10 @@ interface ParcelTerminalManagementInterface
     /**
      * Find parcel terminals for the customer
      *
-     * @param string $postcode
+     * @param string $group
      * @param string $city
      * @param string $country
-     * @return \Itella\Shipping\Api\Data\ParcelTerminalInterface[]
+     * @return Array
      */
     public function fetchParcelTerminals($group, $city, $country );
 }

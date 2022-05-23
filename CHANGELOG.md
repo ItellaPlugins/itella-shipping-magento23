@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.13] - 2021-05-23
+## Fixed
+- bugfix in annotations
+
 ## [1.2.12] - 2021-04-12
 ## Fixed
 - bugfix in Admin REST API
