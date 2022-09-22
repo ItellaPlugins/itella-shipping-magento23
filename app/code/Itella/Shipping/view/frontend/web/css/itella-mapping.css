@@ -24,7 +24,7 @@
 }
 
 .itella-shipping-container .itella-modal-btn {
-  background: #0005cc;
+  background: #005dc0;
   color: #fff;
   text-decoration: none;
   text-transform: uppercase;
@@ -112,7 +112,7 @@
 
 .itella-card-header {
   padding: 12px 24px;
-  background-color: #0000CC;
+  background-color: #005dc0;
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -317,7 +317,7 @@
 }
 
 .itella-select ul li.active {
-  background-color: #0000CC;
+  background-color: #005dc0;
   color: #fff;
 }
 

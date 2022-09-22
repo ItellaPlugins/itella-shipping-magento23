@@ -39,7 +39,7 @@ define([
         
         setLogos: function(){
             if ($('#checkout-shipping-method-load').length != 0){
-                var img = '<img src = "'+require.toUrl('Itella_Shipping/images/')+'/logo.png" style = "height:30px;"/>';
+                var img = '<img src = "'+require.toUrl('Itella_Shipping/images/')+'/smartpost-logo.png" style = "height:30px;"/>';
                 if ($('#label_carrier_PARCEL_TERMINAL_itella') !== undefined && $('#label_carrier_PARCEL_TERMINAL_itella img').length === 0){
                     $('#label_carrier_PARCEL_TERMINAL_itella').html(img);
                 }

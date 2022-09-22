@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.14] - 2021-09-22
+## Fixed
+- logo and colors update
+
 ## [1.2.13] - 2021-05-23
 ## Fixed
 - bugfix in annotations
