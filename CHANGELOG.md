@@ -1,6 +1,10 @@
 # Changelog
 
-## [1.2.14] - 2021-09-22
+## [1.2.15] - 2022-09-27
+## Fixed
+- Added extra extension attributes on checkout, to fix not saving parcel terminal in some cases.
+
+## [1.2.14] - 2022-09-22
 ## Fixed
 - logo and colors update
 

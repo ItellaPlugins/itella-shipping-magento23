@@ -34,7 +34,11 @@ define([
                 if (shippingAddress.extensionAttributes === undefined) {
                     shippingAddress.extensionAttributes = {};
                 }
+                if (shippingAddress.extension_attributes === undefined) {
+                    shippingAddress.extension_attributes = {};
+                }
                 
+                shippingAddress.extension_attributes.itella_parcel_terminal = terminal;
                 shippingAddress.extensionAttributes.itella_parcel_terminal = terminal;
 
                 return originalAction();
