@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.16] - 2023-02-03
+## Fixed
+- Updated leaflet module integration logic.
+
 ## [1.2.15] - 2022-09-27
 ## Fixed
 - Added extra extension attributes on checkout, to fix not saving parcel terminal in some cases.

@@ -6,6 +6,11 @@
                 <value id="itella-leaflet" type="host">https://unpkg.com</value>
             </values>
         </policy>
+        <policy id="script-src">
+            <values>
+                <value id="itella-leaflet" type="host">https://unpkg.com</value>
+            </values>
+        </policy>
         <policy id="img-src">
             <values>
                 <value id="itella-img" type="host">https://map.plugins.itella.com</value>
