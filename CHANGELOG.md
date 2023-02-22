@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.17] - 2023-02-22
+## Fixed
+- Small fixes in displaying delivery methods at checkout
+
 ## [1.2.16] - 2023-02-03
 ## Fixed
 - Updated leaflet module integration logic.
