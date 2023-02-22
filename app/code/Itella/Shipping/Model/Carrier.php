@@ -244,6 +244,12 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
         $this->_updateFreeMethodQuote($request);
         $free = ($this->getConfigData('free_shipping_enable') && $packageValue >= $this->getConfigData('free_shipping_subtotal'));
         $allowedMethods = explode(',', $this->getConfigData('allowed_methods'));
+
+        $country_id = $this->_checkoutSession->getQuote()->getShippingAddress()->getCountryId();
+        if (!in_array($country_id, ['LT', 'LV', 'EE', 'FI'])){
+            return false;
+        }
+
         foreach ($allowedMethods as $allowedMethod) {
             $method = $this->_rateMethodFactory->create();
 
@@ -253,10 +259,6 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             $method->setMethod($allowedMethod);
             $method->setMethodTitle($this->getCode('method', $allowedMethod));
             $amount = $this->getConfigData('price');
-
-            $country_id = $this->_checkoutSession->getQuote()
-                    ->getShippingAddress()
-                    ->getCountryId();
 
             if ($allowedMethod == "COURIER") {
                 switch ($country_id) {
@@ -548,7 +550,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             $itellaPickupPointsObj = new \Mijora\Itella\Locations\PickupPoints('https://locationservice.posti.com/api/2/location');
             $terminals = $itellaPickupPointsObj->getLocationsByCountry($countryCode);
         }
-        if (count($terminals) > 0) {
+        if (is_array($terminals) && count($terminals) > 0) {
             foreach ($terminals as $terminal) {
                 if ($terminal['pupCode'] == $id) {
                     return $terminal;
