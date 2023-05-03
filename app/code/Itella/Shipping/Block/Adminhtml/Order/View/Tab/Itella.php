@@ -30,8 +30,8 @@ class Itella extends \Magento\Backend\Block\Template implements \Magento\Backend
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
-        array $data = [], 
-        \Itella\Shipping\Model\Carrier $Itella_carrier
+        \Itella\Shipping\Model\Carrier $Itella_carrier,
+        array $data = []
     ) {
         $this->coreRegistry = $registry;
         $this->Itella_carrier = $Itella_carrier;
