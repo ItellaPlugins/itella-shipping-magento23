@@ -79,6 +79,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
      * @var string
      */
     protected $globalErrors = [];
+    protected $messageManager;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
@@ -154,6 +155,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             \Magento\Checkout\Model\Session $checkoutSession,
             \Magento\Framework\App\Cache\ManagerFactory $cacheManagerFactory,
             \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
+            \Magento\Framework\Message\ManagerInterface $messageManager,
             array $data = []
     ) {
         $this->_checkoutSession = $checkoutSession;
@@ -164,6 +166,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
         $this->configWriter = $configWriter;
         $this->cacheManagerFactory = $cacheManagerFactory;
         $this->_orderCollectionFactory = $orderCollectionFactory;
+        $this->messageManager = $messageManager;
         //$this->scopeConfig = $scopeConfig
         parent::__construct(
                 $scopeConfig,
