@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+## Fixed
+- Fixed Carrier error messages
+
 ## [1.2.16] - 2023-02-03
 ## Fixed
 - Updated leaflet module integration logic.
