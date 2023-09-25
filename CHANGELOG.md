@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.19] - 2023-09-25
+## Fixed
+- Updated location service endpoint
+
 ## [1.2.17] - 2023-02-22
 ## Fixed
 - Small fixes in displaying delivery methods at checkout
