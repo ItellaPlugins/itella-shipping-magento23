@@ -195,7 +195,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
         $this->_locationFileFi = $configReader->getModuleDir(Dir::MODULE_ETC_DIR, 'Itella_Shipping') . '/location_fi.json';
         if (!$this->getConfigData('location_update') || ($this->getConfigData('location_update') + 3600 * 24) < time() || !file_exists($this->_locationFileLt) || !file_exists($this->_locationFileLv) || !file_exists($this->_locationFileEe) || !file_exists($this->_locationFileFi)
         ) {
-            $itellaPickupPointsObj = new \Mijora\Itella\Locations\PickupPoints('https://locationservice.posti.com/api/2/location');
+            $itellaPickupPointsObj = new \Mijora\Itella\Locations\PickupPoints('https://delivery.plugins.itella.com/api/locations');
 
             $itellaLoc = $itellaPickupPointsObj->getLocationsByCountry('LT');
             $itellaPickupPointsObj->saveLocationsToJSONFile($this->_locationFileLt, json_encode($itellaLoc));
