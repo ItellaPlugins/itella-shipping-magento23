@@ -1,8 +1,14 @@
 # Changelog
 
+## [1.2.20] - 2023-10-17
+## Fixed
+- Fixed Carrier error messages
+
 ## [1.2.19] - 2023-09-25
 ## Fixed
 - Updated location service endpoint
+
+## [1.2.18] - Version skipped
 
 ## [1.2.17] - 2023-02-22
 ## Fixed

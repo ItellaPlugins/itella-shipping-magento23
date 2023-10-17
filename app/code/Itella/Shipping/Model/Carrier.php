@@ -79,6 +79,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
      * @var string
      */
     protected $globalErrors = [];
+    protected $messageManager;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
@@ -154,6 +155,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             \Magento\Checkout\Model\Session $checkoutSession,
             \Magento\Framework\App\Cache\ManagerFactory $cacheManagerFactory,
             \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
+            \Magento\Framework\Message\ManagerInterface $messageManager,
             array $data = []
     ) {
         $this->_checkoutSession = $checkoutSession;
@@ -164,6 +166,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
         $this->configWriter = $configWriter;
         $this->cacheManagerFactory = $cacheManagerFactory;
         $this->_orderCollectionFactory = $orderCollectionFactory;
+        $this->messageManager = $messageManager;
         //$this->scopeConfig = $scopeConfig
         parent::__construct(
                 $scopeConfig,
@@ -516,7 +519,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                     ->setContactMobile($this->getConfigData('company_phone'))
                     ->setContactEmail($this->getConfigData('company_email'));
         } catch (ItellaException $e) {
-            $this->globalErrors[] = $e->getMessage();
+            $this->globalErrors[] = 'Sender error: ' . $e->getMessage();
         }
         return $sender;
     }
@@ -536,7 +539,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                     ->setContactMobile($request->getRecipientContactPhoneNumber())
                     ->setContactEmail($request->getOrderShipment()->getOrder()->getCustomerEmail());
         } catch (Exception $e) {
-            $this->globalErrors[] = $e->getMessage();
+            $this->globalErrors[] = 'Receiver error: ' . $e->getMessage();
         }
         return $receiver;
     }
@@ -629,7 +632,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                     $services[] = $service;
                 }
             } catch (Exception $e) {
-                $this->globalErrors[] = $e->getMessage();
+                $this->globalErrors[] = 'Services error: ' . $e->getMessage();
             }
         }
         return $services;
@@ -673,7 +676,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                 $items[] = $item;
             }
         } catch (Exception $e) {
-            $this->globalErrors[] = $e->getMessage();
+            $this->globalErrors[] = 'Items error: ' . $e->getMessage();
         }
         return $items;
     }
@@ -716,7 +719,11 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             $services = $this->_getItellaServices($request);
             
             if (!empty($this->globalErrors)) {
-                throw new \Exception('Error: Order '.$request->getOrderShipment()->getOrder()->getIncrementId().' has errors.');
+                $error_msg = 'Error: Order '.$request->getOrderShipment()->getOrder()->getIncrementId().' has errors';
+                if ( is_array($this->globalErrors) ) {
+                    $error_msg .= ':<br/>' . implode('.<br/>', $this->globalErrors);
+                }
+                throw new \Exception($error_msg . '.');
             }
 
             if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_PICKUP) {
