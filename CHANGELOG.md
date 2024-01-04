@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+## Fixed
+- Fixed Itella shipping methods show in "Reorder" page
+
 ## [1.2.20] - 2023-10-17
 ## Fixed
 - Fixed Carrier error messages
