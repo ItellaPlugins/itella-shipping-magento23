@@ -248,7 +248,10 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
         $free = ($this->getConfigData('free_shipping_enable') && $packageValue >= $this->getConfigData('free_shipping_subtotal'));
         $allowedMethods = explode(',', $this->getConfigData('allowed_methods'));
 
-        $country_id = $this->_checkoutSession->getQuote()->getShippingAddress()->getCountryId();
+        $country_id = $request->getDestCountryId();
+        if (!$country_id) {
+            $country_id = $this->_checkoutSession->getQuote()->getShippingAddress()->getCountryId();
+        }
         if (!in_array($country_id, ['LT', 'LV', 'EE', 'FI'])){
             return false;
         }
