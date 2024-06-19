@@ -651,7 +651,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             foreach ($itemsShipment as $itemShipment) {
                 $order_item = new \Magento\Framework\DataObject();
                 $order_item->setData($itemShipment);
-                $total_weight += $order_item->getWeight() * $order_item->getQty();
+                $total_weight += floatval($order_item->getWeight()) * intval($order_item->getQty());
             }
             if ($send_method == "COURIER") {
                 $order_services = $request->getOrderShipment()->getOrder()->getItellaServices();
