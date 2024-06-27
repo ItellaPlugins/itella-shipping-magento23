@@ -248,7 +248,10 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
         $free = ($this->getConfigData('free_shipping_enable') && $packageValue >= $this->getConfigData('free_shipping_subtotal'));
         $allowedMethods = explode(',', $this->getConfigData('allowed_methods'));
 
-        $country_id = $this->_checkoutSession->getQuote()->getShippingAddress()->getCountryId();
+        $country_id = $request->getDestCountryId();
+        if (!$country_id) {
+            $country_id = $this->_checkoutSession->getQuote()->getShippingAddress()->getCountryId();
+        }
         if (!in_array($country_id, ['LT', 'LV', 'EE', 'FI'])){
             return false;
         }
@@ -648,7 +651,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             foreach ($itemsShipment as $itemShipment) {
                 $order_item = new \Magento\Framework\DataObject();
                 $order_item->setData($itemShipment);
-                $total_weight += $order_item->getWeight() * $order_item->getQty();
+                $total_weight += floatval($order_item->getWeight()) * intval($order_item->getQty());
             }
             if ($send_method == "COURIER") {
                 $order_services = $request->getOrderShipment()->getOrder()->getItellaServices();
@@ -787,6 +790,26 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                 },
                         $trackingIds
                 ) : $trackingIds->TrackingNumber;
+    }
+
+    /**
+     * Get tracking info
+     * 
+     * @param string $trackingNumber
+     * @return object
+     */
+    public function getTrackingInfo($trackingNumber) {
+        $tracking = $this->_trackStatusFactory->create();
+
+        $url = 'https://itella.lt/en/business-customer/track-shipment/?trackingCode=' . $trackingNumber;
+
+        $tracking->setData([
+            'carrier' => $this->_code,
+            'carrier_title' => $this->getConfigData('title'),
+            'tracking' => $trackingNumber,
+            'url' => $url,
+        ]);
+        return $tracking;
     }
 
     /**

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.21] - 2024-06-27
+## Fixed
+- Fixed Itella shipping methods show in "Reorder" page
+- Fixed "Undefined variable $sourceCode" error when printing labels
+- Fixed multiplication action when the numeric data of the incoming order items type is string
+- Fixed the Magento shipment tracking page
+
 ## [1.2.20] - 2023-10-17
 ## Fixed
 - Fixed Carrier error messages
