@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.2.21] - 2024-06-27
 ## Fixed
 - Fixed Itella shipping methods show in "Reorder" page
 - Fixed "Undefined variable $sourceCode" error when printing labels
