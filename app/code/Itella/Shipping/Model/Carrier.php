@@ -793,6 +793,26 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
     }
 
     /**
+     * Get tracking info
+     * 
+     * @param string $trackingNumber
+     * @return object
+     */
+    public function getTrackingInfo($trackingNumber) {
+        $tracking = $this->_trackStatusFactory->create();
+
+        $url = 'https://itella.lt/en/business-customer/track-shipment/?trackingCode=' . $trackingNumber;
+
+        $tracking->setData([
+            'carrier' => $this->_code,
+            'carrier_title' => $this->getConfigData('title'),
+            'tracking' => $trackingNumber,
+            'url' => $url,
+        ]);
+        return $tracking;
+    }
+
+    /**
      * For multi package shipments. Delete requested shipments if the current shipment
      * request is failed
      *
