@@ -60,7 +60,10 @@ define([
             if ($('#s_method_itella_PARCEL_TERMINAL').length > 0){
                   var move_after = $('#s_method_itella_PARCEL_TERMINAL').parents('tr'); 
               } else if ($('#label_method_PARCEL_TERMINAL_itella').length > 0){
-                  var move_after = $('#label_method_PARCEL_TERMINAL_itella').parents('tr'); 
+                  var move_after = $('#label_method_PARCEL_TERMINAL_itella').parents('tr');
+                  if (!move_after.length && $('.amtheme-shipping-method').length > 0) { //Compatibility with Amasty/JetTheme
+                    move_after = $('#label_method_PARCEL_TERMINAL_itella').parents('.amtheme-method');
+                  }
               }
             //$('#terminal-select-location').remove();
             
