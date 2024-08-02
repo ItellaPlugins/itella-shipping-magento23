@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+## Changed
+- Added compatibility with new themes:
+    Amasty/JetTheme
+
 ## [1.2.21] - 2024-06-27
 ## Fixed
 - Fixed Itella shipping methods show in "Reorder" page
