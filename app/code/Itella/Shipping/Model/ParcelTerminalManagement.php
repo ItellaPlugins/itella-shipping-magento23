@@ -19,8 +19,10 @@ class ParcelTerminalManagement implements ParcelTerminalManagementInterface
      * 
      * @param ParcelTerminalInterfaceFactory $parcelTerminalInterfaceFactory
      */
-    public function __construct(ParcelTerminalInterfaceFactory $parcelTerminalInterfaceFactory, \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig)
-    {
+    public function __construct(
+        ParcelTerminalInterfaceFactory $parcelTerminalInterfaceFactory,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+    ) {
         $this->parcelTerminalFactory = $parcelTerminalInterfaceFactory;
         $this->scopeConfig = $scopeConfig;
     }
