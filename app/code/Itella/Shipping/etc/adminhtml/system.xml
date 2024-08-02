@@ -118,6 +118,10 @@
                         <field id="free_shipping_enable">1</field>
                     </depends>
                 </field>
+                <field id="exclude_outdoors" translate="label" type="select" sortOrder="185" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude pickup points with "Outdoor" parameter</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <field id="allowed_methods" translate="label" type="multiselect" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Allowed Methods</label>
                     <source_model>Itella\Shipping\Model\Source\Method</source_model>

@@ -4,6 +4,7 @@
 ## Changed
 - Added compatibility with new themes:
     Amasty/JetTheme
+- Added option to disable display of pickup points that have the "Outdoors" parameter
 
 ## [1.2.21] - 2024-06-27
 ## Fixed
