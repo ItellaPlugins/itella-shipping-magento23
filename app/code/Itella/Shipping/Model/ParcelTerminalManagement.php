@@ -12,15 +12,19 @@ use Magento\Framework\Module\Dir;
 class ParcelTerminalManagement implements ParcelTerminalManagementInterface
 {
     protected $parcelTerminalFactory;
+    protected $scopeConfig;
 
     /**
      * ParcelTerminalInterfaceFactory constructor.
      * 
      * @param ParcelTerminalInterfaceFactory $parcelTerminalInterfaceFactory
      */
-    public function __construct(ParcelTerminalInterfaceFactory $parcelTerminalInterfaceFactory)
-    {
+    public function __construct(
+        ParcelTerminalInterfaceFactory $parcelTerminalInterfaceFactory,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+    ) {
         $this->parcelTerminalFactory = $parcelTerminalInterfaceFactory;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -47,6 +51,42 @@ class ParcelTerminalManagement implements ParcelTerminalManagementInterface
         //$Itella_carrier = new Carrier();
         //$terminals = Carrier::getCode('terminal');
         $result = json_decode(file_get_contents($locationFile),true);
-        return $result;
+        $filtered_terminals = $this->filterParcelTerminals($result);
+        return $filtered_terminals;
+    }
+
+    private function getConfig($config_path) {
+        return $this->scopeConfig->getValue(
+            'carriers/itella/' . $config_path,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    private function filterParcelTerminals($terminals)
+    {
+        if (!is_array($terminals)) {
+            return $terminals;
+        }
+
+        $exclude_outdoors = $this->getConfig('exclude_outdoors');
+
+        $remove_terminals = array();
+        foreach ($terminals as $key => $terminal) {
+            if (!isset($terminal['capabilities'])) {
+                continue;
+            }
+            foreach ($terminal['capabilities'] as $capability) {
+                if ($exclude_outdoors && $capability['name'] == 'outdoors' && $capability['value'] == 'OUTDOORS') {
+                    $remove_terminals[] = $key;
+                    break;
+                }
+            }
+        }
+        foreach ($remove_terminals as $key) {
+            unset($terminals[$key]);
+        }
+        $terminals = array_values($terminals);
+
+        return $terminals;
     }
 }
