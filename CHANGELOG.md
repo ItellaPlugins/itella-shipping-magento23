@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.2.22] - 2024-09-16
 ## Changed
 - Added compatibility with new themes:
     Amasty/JetTheme
