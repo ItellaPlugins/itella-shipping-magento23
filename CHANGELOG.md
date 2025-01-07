@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.2.23] - 2025-01-07
 ## Changed
 - Added the ability to choose a pickup point from the dropdown
 
