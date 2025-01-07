@@ -106,7 +106,7 @@ define([
                   error_missing_mount_el: $.mage.__('No mount supplied to itellaShipping')
               })
               // build HTML and register event handlers
-              .init()
+              .init(window.checkoutConfig.itellaGlobalData.show_map)
 
               // for search to work properly country iso2 code must be set (defaults to LT), empty string would allow global search
               .setCountry(quote.shippingAddress().countryId)

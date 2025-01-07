@@ -1,4 +1,5 @@
-.itella-mapping-modal * {
+.itella-mapping-modal *,
+.itella-shipping-container * {
   box-sizing: border-box;
 }
 
@@ -24,7 +25,7 @@
 }
 
 .itella-shipping-container .itella-modal-btn {
-  background: #005dc0;
+  background: #0005cc;
   color: #fff;
   text-decoration: none;
   text-transform: uppercase;
@@ -112,7 +113,7 @@
 
 .itella-card-header {
   padding: 12px 24px;
-  background-color: #005dc0;
+  background-color: #0000CC;
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -200,6 +201,10 @@
 .itella-select {
   background-color: #fff;
   position: relative;
+}
+
+.itella-shipping-container > .itella-select {
+  width: 100%;
 }
 
 .itella-select .dropdown {
@@ -317,7 +322,7 @@
 }
 
 .itella-select ul li.active {
-  background-color: #005dc0;
+  background-color: #0000CC;
   color: #fff;
 }
 

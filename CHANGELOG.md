@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.23] - 2025-01-07
+## Changed
+- Added the ability to choose a pickup point from the dropdown
+
+## Updated
+- itella-mapping.js to v1.3.1
+
 ## [1.2.22] - 2024-09-16
 ## Changed
 - Added compatibility with new themes:
