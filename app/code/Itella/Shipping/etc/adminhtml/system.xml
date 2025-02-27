@@ -9,7 +9,7 @@
     <system>
         <section id="carriers">
             <group id="itella" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Smartpost Shipping</label>
+                <label>Smartposti Shipping</label>
                 <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Enabled for Checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

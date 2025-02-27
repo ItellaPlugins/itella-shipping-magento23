@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+## Changed
+- name "Smartpost" and "Smartpost Itella" to "Smartposti"
+- logo to "Smartposti"
+
+## Updated
+- itella-mapping.js to v1.3.2
+
 ## [1.2.23] - 2025-01-07
 ## Changed
 - Added the ability to choose a pickup point from the dropdown

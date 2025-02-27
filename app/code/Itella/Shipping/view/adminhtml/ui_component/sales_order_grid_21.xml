@@ -6,7 +6,7 @@
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">mass_labels</item>
-                        <item name="label" xsi:type="string" translate="true">Generate Smartpost Labels</item>
+                        <item name="label" xsi:type="string" translate="true">Generate Smartposti Labels</item>
                         <item name="url" xsi:type="url" path="itella/order/printMassLabels"/>
                     </item>
                 </argument>
@@ -15,7 +15,7 @@
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">mass_manifest</item>
-                        <item name="label" xsi:type="string" translate="true">Generate Smartpost Manifest</item>
+                        <item name="label" xsi:type="string" translate="true">Generate Smartposti Manifest</item>
                         <item name="url" xsi:type="url" path="itella/order/printMassManifest"/>
                     </item>
                 </argument>

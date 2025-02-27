@@ -344,8 +344,8 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
 
         $codes = [
             'method' => [
-                'COURIER' => __('Smartpost courier'),
-                'PARCEL_TERMINAL' => __('Smartpost pickup point'),
+                'COURIER' => __('Smartposti courier'),
+                'PARCEL_TERMINAL' => __('Smartposti pickup point'),
             ],
             'country' => [
                 'EE' => __('Estonia'),
