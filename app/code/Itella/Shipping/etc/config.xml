@@ -13,7 +13,7 @@
                 <active>0</active>
                 <allowed_methods>COURIER,PARCEL_TERMINAL</allowed_methods>
                 <model>Itella\Shipping\Model\Carrier</model>
-                <title>Smartpost Itella</title>
+                <title>Smartposti</title>
                 <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
                 <unit_of_measure>KG</unit_of_measure>
                 <max_package_weight>150</max_package_weight>

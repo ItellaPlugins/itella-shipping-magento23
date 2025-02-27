@@ -27,7 +27,7 @@ class InstallSchema implements InstallSchemaInterface
             [
                 'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 'nullable' => true,
-                'comment' => 'Smartpost Parcel Terminal',
+                'comment' => 'Smartposti Parcel Terminal',
             ]
         );
 
@@ -37,7 +37,7 @@ class InstallSchema implements InstallSchemaInterface
             [
                 'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                 'nullable' => true,
-                'comment' => 'Smartpost Parcel Terminal',
+                'comment' => 'Smartposti Parcel Terminal',
             ]
         );
         
@@ -60,7 +60,7 @@ class InstallSchema implements InstallSchemaInterface
                 'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                 'length' => 255,
                 'nullable' => true,
-                'comment' => 'Smartpost Extra services',
+                'comment' => 'Smartposti Extra services',
             ]
         );
          

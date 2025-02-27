@@ -39,7 +39,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     'length' => 255,
                     'nullable' => true,
-                    'comment' => 'Smartpost Extra services',
+                    'comment' => 'Smartposti Extra services',
                 ]
 
             );
