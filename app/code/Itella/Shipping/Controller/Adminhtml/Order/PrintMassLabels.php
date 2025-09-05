@@ -256,7 +256,11 @@ class PrintMassLabels extends \Magento\Sales\Controller\Adminhtml\Order\Abstract
         }
         $outputPdf = $this->_combineLabelsPdfZend($labelsContent);
         $shipment->setShippingLabel($outputPdf->render());
-        $shipment->getExtensionAttributes()->setSourceCode('default');
+        $extensionAttributes = $shipment->getExtensionAttributes();
+        if ($extensionAttributes && method_exists($extensionAttributes, 'setSourceCode')) {
+            $extensionAttributes->setSourceCode('default');
+            $shipment->setExtensionAttributes($extensionAttributes);
+        }
         $shipment->save();
         if ($trackingNumbers) {
             foreach ($shipment->getAllTracks() as $track) {
