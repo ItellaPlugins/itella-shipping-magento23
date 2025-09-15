@@ -1,90 +1,94 @@
 # Changelog
 
+## [Unreleased]
+### Fixed
+- Fixed shipment registration when MSI is disabled
+
 ## [1.3.0] - 2025-03-20
-## Changed
+### Changed
 - name "Smartpost" and "Smartpost Itella" to "Smartposti"
 - logo to "Smartposti"
 
-## Updated
+### Updated
 - itella-mapping.js to v1.3.2
 
 ## [1.2.23] - 2025-01-07
-## Changed
+### Changed
 - Added the ability to choose a pickup point from the dropdown
 
-## Updated
+### Updated
 - itella-mapping.js to v1.3.1
 
 ## [1.2.22] - 2024-09-16
-## Changed
+### Changed
 - Added compatibility with new themes:
     Amasty/JetTheme
 - Added option to disable display of pickup points that have the "Outdoors" parameter
 
 ## [1.2.21] - 2024-06-27
-## Fixed
+### Fixed
 - Fixed Itella shipping methods show in "Reorder" page
 - Fixed "Undefined variable $sourceCode" error when printing labels
 - Fixed multiplication action when the numeric data of the incoming order items type is string
 - Fixed the Magento shipment tracking page
 
 ## [1.2.20] - 2023-10-17
-## Fixed
+### Fixed
 - Fixed Carrier error messages
 
 ## [1.2.19] - 2023-09-25
-## Fixed
+### Fixed
 - Updated location service endpoint
 
 ## [1.2.18] - Version skipped
 
 ## [1.2.17] - 2023-02-22
-## Fixed
+### Fixed
 - Small fixes in displaying delivery methods at checkout
 
 ## [1.2.16] - 2023-02-03
-## Fixed
+### Fixed
 - Updated leaflet module integration logic.
 
 ## [1.2.15] - 2022-09-27
-## Fixed
+### Fixed
 - Added extra extension attributes on checkout, to fix not saving parcel terminal in some cases.
 
 ## [1.2.14] - 2022-09-22
-## Fixed
+### Fixed
 - logo and colors update
 
 ## [1.2.13] - 2021-05-23
-## Fixed
+### Fixed
 - bugfix in annotations
 
 ## [1.2.12] - 2021-04-12
-## Fixed
+### Fixed
 - bugfix in Admin REST API
 
 ## [1.2.11] - 2021-02-28
-## Updated
+### Updated
 - bugfix in label and manifest printing
 
 ## [1.2.10] - 2021-02-25
-## Updated
+### Updated
 - bugfix in label printing
 
 ## [1.2.9] - 2021-02-25
-## Updated
+### Updated
 - updated pickup point saving process in checkout
 
 ## [1.2.8] - 2021-02-25
-## Changed
+### Changed
 - checkout terminal search API URL update
 
 ## [1.2.7] - 2021-02-15
-## Changed
+### Changed
 - small bugfixes
 - added smartpost_parcel_terminal field to Magento admin order REST API
 
 ## [1.2.6] - 2021-01-22
-## Changed
+### Changed
 - applied changes by the itella-api v2.3.1 library
 
 ## [1.2.5] - 2021-01-20
