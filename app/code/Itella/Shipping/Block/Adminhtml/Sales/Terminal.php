@@ -1,7 +1,7 @@
 <?php
 namespace Itella\Shipping\Block\Adminhtml\Sales;
 
-use  Magento\Sales\Model\OrderRepository;
+use Magento\Sales\Model\OrderRepository;
 
 class Terminal extends \Magento\Backend\Block\Template {
    
@@ -47,9 +47,9 @@ class Terminal extends \Magento\Backend\Block\Template {
     {
         $shippingAddress = $order->getShippingAddress();
         $terminal_id = $shippingAddress->getItellaParcelTerminal();
-        $parcel_terminal = $this->Itella_carrier->_getItellaTerminal($terminal_id,$shippingAddress->getCountryId());
+        $parcel_terminal = $this->Itella_carrier->_getItellaTerminal($terminal_id, $shippingAddress->getCountryId());
         return $parcel_terminal;
-   } 
+    } 
     
     /**
      * Retrieve order model instance

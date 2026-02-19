@@ -17,23 +17,22 @@
                 <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Title</label>
                 </field>
-                <field id="user_2317" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>API user (2317 Product)</label>
+                <field id="api_username" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API user</label>
                 </field>
-                <field id="password_2317" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>API password (2317 Product)</label>
+                <field id="api_password" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API password</label>
                 </field>
-                <field id="itella_contract_2317" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Contract (2317 Product)</label>
+                <field id="api_contract" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API contract</label>
                 </field>
-                <field id="user_2711" translate="label comment" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>API user (2711 Product)</label>
+                <field id="api_p_service" translate="label" type="select" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Parcel locker service</label>
+                    <source_model>Itella\Shipping\Model\Config\Source\ApiPickupServiceOptions</source_model>
                 </field>
-                <field id="password_2711" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>API password (2711 Product)</label>
-                </field>
-                <field id="itella_contract_2711" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Contract (2711 Product)</label>
+                <field id="api_c_service" translate="label" type="select" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Courier service</label>
+                    <source_model>Itella\Shipping\Model\Config\Source\ApiCourierServiceOptions</source_model>
                 </field>
                 <field id="cod_company" translate="label" type="text" sortOrder="91" showInDefault="1" showInWebsite="1" showInStore="0" >
                     <label>Company name</label>

@@ -2,6 +2,8 @@
 
 namespace Itella\Shipping\Block\Adminhtml\Order\View\Tab;
 
+use Mijora\Itella\Shipment\AdditionalService;
+use Mijora\Itella\Shipment\Shipment;
 
 class Itella extends \Magento\Backend\Block\Template implements \Magento\Backend\Block\Widget\Tab\TabInterface
 {
@@ -53,27 +55,57 @@ class Itella extends \Magento\Backend\Block\Template implements \Magento\Backend
     {
         $shippingAddress = $order->getShippingAddress();
         $terminal_id = $shippingAddress->getItellaParcelTerminal();
-        $parcel_terminal = $this->Itella_carrier->_getItellaTerminal($terminal_id,$shippingAddress->getCountryId());
+        $parcel_terminal = $this->Itella_carrier->_getItellaTerminal($terminal_id, $shippingAddress->getCountryId());
         return $parcel_terminal;
-   }       
+    }       
 
-    public function getServices(){
-        return array('3101'=>__("Cash On Delivery"),
-        '3104' => __("Fragile"),
-        '3166' => __("Call before Delivery"),
-        '3174' => __("Oversized"),
-        '3102' => __("Multi Parcel"));
+    public function getServices($order)
+    {
+        $all_services = array(
+            '3101' => __("Cash On Delivery"),
+            '3104' => __("Fragile"),
+            '3166' => __("Call before Delivery"),
+            '3174' => __("Oversized"),
+            '3102' => __("Multi Parcel")
+        );
+
+        $allowed_services = AdditionalService::getCodesByProduct($this->getOrderProductCode($order));
+        $services = array();
+        foreach ($allowed_services as $service_code) {
+            if (isset($all_services[$service_code])) {
+                $services[$service_code] = $all_services[$service_code];
+            }
+        }
+        $shippingAddress = $order->getShippingAddress();
+        $receiverCountry = $shippingAddress->getCountryId();
+        if ($this->getOrderProductCode($order) == Shipment::PRODUCT_HOME_PARCEL && $receiverCountry == 'FI') {
+            if (isset($services[AdditionalService::COD])) {
+                unset($services[AdditionalService::COD]);
+            }
+        }
+        return $services;
+    }
+
+    public function getOrderProductCode($order)
+    {
+        $order_shipping_method = $order->getData('shipping_method');
+        if (strtoupper($order_shipping_method) == 'ITELLA_PARCEL_TERMINAL') {
+            return $this->Itella_carrier->_getPickupServiceCode();
+        } elseif (strtoupper($order_shipping_method) == 'ITELLA_COURIER') {
+            return $this->Itella_carrier->_getCourierServiceCode();
+        }
+        return '';
     }
     
     public function isItellaMethod($order)
-      {
-        $_ItellaMethods      = array(
-          //'Itella_PARCEL_TERMINAL',
-          'itella_COURIER'
+    {
+        $_ItellaMethods = array(
+            'itella_PARCEL_TERMINAL',
+            'itella_COURIER'
         );
         $order_shipping_method = $order->getData('shipping_method');
         return in_array($order_shipping_method, $_ItellaMethods);
-      }
+    }
 
     /**
      * {@inheritdoc}

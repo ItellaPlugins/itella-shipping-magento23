@@ -1,8 +1,14 @@
 # Changelog
 
-## [Unreleased]
+## [unreleaed] - 2026-02-19
 ### Fixed
 - Fixed shipment registration when MSI is disabled
+
+### Updated
+- Left only one type of API credentials to input in settings
+- Added settings for pickup and courier product code selection
+- Added support for API 2.5.1 version
+- Added restriction for Multi Parcel service if COD is selected
 
 ## [1.3.0] - 2025-03-20
 ### Changed

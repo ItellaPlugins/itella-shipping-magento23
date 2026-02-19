@@ -18,6 +18,8 @@
                 <unit_of_measure>KG</unit_of_measure>
                 <max_package_weight>150</max_package_weight>
                 <active_rma>0</active_rma>
+                <api_p_service>2711</api_p_service>
+                <api_c_service>2317</api_c_service>
             </itella>
         </carriers>
     </default>

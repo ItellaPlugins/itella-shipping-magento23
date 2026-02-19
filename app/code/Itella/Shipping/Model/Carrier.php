@@ -504,16 +504,9 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
 
     protected function _getItellaSender(\Magento\Framework\DataObject $request) {
         try {
-            $contract = '';
-            if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_PICKUP) {
-                $contract = $this->getConfigData('itella_contract_2711');
-            }
-            if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_COURIER) {
-                $contract = $this->getConfigData('itella_contract_2317');
-            }
             $sender = new \Mijora\Itella\Shipment\Party(\Mijora\Itella\Shipment\Party::ROLE_SENDER);
             $sender
-                    ->setContract($contract)  
+                    ->setContract($this->getConfigData('api_contract'))  
                     ->setName1($this->getConfigData('cod_company'))
                     ->setStreet1($this->getConfigData('company_address'))
                     ->setPostCode($this->getConfigData('company_postcode'))
@@ -612,13 +605,13 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
 
                 if ($this->_isCod($request) || in_array(3101, $order_services)) {
                     $service_cod = new AdditionalService(
-                            AdditionalService::COD,
-                            array(
-                        'amount' => round($request->getOrderShipment()->getOrder()->getGrandTotal(), 2),
-                        'codbic' => $this->getConfigData('cod_company'),
-                        'account' => $this->getConfigData('cod_bank_account'),
-                        'reference' => Helper::generateCODReference($request->getOrderShipment()->getOrder()->getId())
-                            )
+                        AdditionalService::COD,
+                        array(
+                            'amount' => round($request->getOrderShipment()->getOrder()->getGrandTotal(), 2),
+                            'codbic' => $this->getConfigData('cod_company'),
+                            'account' => $this->getConfigData('cod_bank_account'),
+                            'reference' => Helper::generateCODReference($request->getOrderShipment()->getOrder()->getId())
+                        )
                     );
                     $services[] = $service_cod;
                 }
@@ -662,7 +655,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                 }
                 $multi_parcel_count = $order_services['parcel_count'];
                 $order_services = $order_services['services'];
-                if (in_array(3102, $order_services) && $multi_parcel_count > 1 && $multi_parcel_count <=10) {
+                if (in_array(3102, $order_services) && $multi_parcel_count > 1 && $multi_parcel_count <=10 && !($this->_isCod($request) || in_array(3101, $order_services)) ) {
                     for ($i=1;$i<=$multi_parcel_count;$i++){
                         $item = new \Mijora\Itella\Shipment\GoodsItem();
                         $item->setGrossWeight(round($total_weight/$multi_parcel_count,3));
@@ -695,12 +688,20 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
     protected function _getItellaShippingType(\Magento\Framework\DataObject $request) {
         $send_method = trim(str_ireplace('Itella_', '', $request->getShippingMethod()));
         if ($send_method == "PARCEL_TERMINAL") {
-            return Shipment::PRODUCT_PICKUP;
+            return "PARCEL_TERMINAL";
         }
         if ($send_method == "COURIER") {
-            return Shipment::PRODUCT_COURIER;
+            return "COURIER";
         }
         return false;
+    }
+
+    public function _getCourierServiceCode() {
+        return $this->getConfigData('api_c_service') ?? Shipment::PRODUCT_COURIER;
+    }
+
+    public function _getPickupServiceCode() {
+        return $this->getConfigData('api_p_service') ?? Shipment::PRODUCT_PICKUP;
     }
 
     /**
@@ -729,20 +730,20 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                 throw new \Exception($error_msg . '.');
             }
 
-            if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_PICKUP) {
+            $shipment = new \Mijora\Itella\Shipment\Shipment($this->getConfigData('api_username'), $this->getConfigData('api_password'));
+            if ($this->_getItellaShippingType($request) == 'PARCEL_TERMINAL') {
                 $terminal_id = $request->getOrderShipment()->getOrder()->getShippingAddress()->getItellaParcelTerminal();
                 $terminal = str_pad($terminal_id, 9, "0", STR_PAD_LEFT);
-                $shipment = new \Mijora\Itella\Shipment\Shipment($this->getConfigData('user_2711'), $this->getConfigData('password_2711'));
                 $shipment
-                        ->setProductCode(Shipment::PRODUCT_PICKUP)
+                        ->setProductCode($this->_getPickupServiceCode())
                         ->setPickupPoint($terminal);
             }
-            if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_COURIER) {
-                $shipment = new \Mijora\Itella\Shipment\Shipment($this->getConfigData('user_2317'), $this->getConfigData('password_2317'));
-                $shipment->setProductCode(Shipment::PRODUCT_COURIER);
+            if ($this->_getItellaShippingType($request) == 'COURIER') {
+                $shipment->setProductCode($this->_getCourierServiceCode());
             }
             $shipment
                     ->setShipmentNumber($request->getOrderShipment()->getOrder()->getId()) // Shipment/waybill identifier
+                    ->setRoutingClient('BAL-MAGENTO')
                     ->setSenderParty($sender) // previously created Sender object
                     ->setReceiverParty($receiver) // previously created Receiver object
                     ->addAdditionalServices($services)
