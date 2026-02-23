@@ -29,27 +29,34 @@
     
     
     <?php $_terminal = $block->getTerminal($_order) ?>
+    <?php $availableServices = $this->getServices($_order); ?>
     <div class="admin__page-section-title">
         <span class="title"><?= /* @escapeNotVerified */ __('Smartposti courrier extra information') ?></span>
     </div>
     <div class="admin__field">
-        <div class="order-itella-services-options" id = "itella_services_block">
-            <?php foreach ($this->getServices() as $id => $label): ?>
-            <div class="admin__field admin__field-option">
-                <input name="itella_services[]" type="checkbox" id="service-<?php echo $id; ?>" class="admin__control-checkbox" value="<?php echo $id; ?>" <?php echo (isset($_orderServices['services']) && in_array($id,$_orderServices['services'])?'checked="checked"':'');?>>
-                <label class="admin__field-label" for="service-<?php echo $id; ?>"><?php echo $label; ?></label>
-            </div>
-            <?php endforeach; ?>
-            <input type = "number" min = "2" max  = "10" name = "parcel_count" placeholder = "Parcel count" value = "<?php echo (isset($_orderServices['parcel_count'])?$_orderServices['parcel_count']:'2'); ?>"/>
+        <?php if (empty($availableServices)): ?>
+            <p><?= /* @escapeNotVerified */ __('No extra services available for this order') ?></p>
+        <?php else: ?>
+            <div class="order-itella-services-options" id = "itella_services_block">
+                <?php foreach ($availableServices as $id => $label): ?>
+                    <div class="admin__field admin__field-option">
+                        <input name="itella_services[]" type="checkbox" id="service-<?php echo $id; ?>" class="admin__control-checkbox" value="<?php echo $id; ?>" <?php echo (isset($_orderServices['services']) && in_array($id,$_orderServices['services'])?'checked="checked"':'');?>>
+                        <label class="admin__field-label" for="service-<?php echo $id; ?>"><?php echo $label; ?></label>
+                    </div>
+                    <?php if ($id == '3102'): ?>
+                        <input type = "number" min = "2" max  = "10" name = "parcel_count" placeholder = "Parcel count" value = "<?php echo (isset($_orderServices['parcel_count']) ? $_orderServices['parcel_count'] : '2'); ?>"/>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             
-            <input type="hidden" name="order_id" value="<?= /* @escapeNotVerified */ $_order->getId() ?>"/>
-        </div>
-        <br/>
-        <div class="order-itella-services-actions">
-            <button id="itella-services-btn" title="Save services" type="button" class="action-default scalable action-save action-secondary" onclick="submitAndReloadArea($('itella_services_block').parentNode, '<?php echo $this->getUrl('itella/order/saveservicesajax'); ?>')" data-ui-id="widget-button-0">
-                <span><?php echo __("Save services"); ?></span>
-            </button>
-        </div>
+                <input type="hidden" name="order_id" value="<?= /* @escapeNotVerified */ $_order->getId() ?>"/>
+            </div>
+            <br/>
+            <div class="order-itella-services-actions">
+                <button id="itella-services-btn" title="Save services" type="button" class="action-default scalable action-save action-secondary" onclick="submitAndReloadArea($('itella_services_block').parentNode, '<?php echo $this->getUrl('itella/order/saveservicesajax'); ?>')" data-ui-id="widget-button-0">
+                    <span><?php echo __("Save services"); ?></span>
+                </button>
+            </div>
+        <?php endif; ?>
     </div>
     
     <script>

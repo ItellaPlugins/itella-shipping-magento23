@@ -504,16 +504,9 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
 
     protected function _getItellaSender(\Magento\Framework\DataObject $request) {
         try {
-            $contract = '';
-            if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_PICKUP) {
-                $contract = $this->getConfigData('itella_contract_2711');
-            }
-            if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_COURIER) {
-                $contract = $this->getConfigData('itella_contract_2317');
-            }
             $sender = new \Mijora\Itella\Shipment\Party(\Mijora\Itella\Shipment\Party::ROLE_SENDER);
             $sender
-                    ->setContract($contract)  
+                    ->setContract($this->getConfigData('api_contract'))  
                     ->setName1($this->getConfigData('cod_company'))
                     ->setStreet1($this->getConfigData('company_address'))
                     ->setPostCode($this->getConfigData('company_postcode'))
@@ -579,6 +572,21 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
         return $terminals;
     }
 
+    public function _allowedOrderServices($order) {
+        return AdditionalService::getCodesByProduct($this->_getOrderProductCode($order));
+    }
+
+    public function _getOrderProductCode($order)
+    {
+        $order_shipping_method = $order->getData('shipping_method');
+        if (strtoupper($order_shipping_method) == 'ITELLA_PARCEL_TERMINAL') {
+            return $this->_getPickupServiceCode();
+        } elseif (strtoupper($order_shipping_method) == 'ITELLA_COURIER') {
+            return $this->_getCourierServiceCode();
+        }
+        return '';
+    }
+
     protected function _getItellaServices(\Magento\Framework\DataObject $request) {
         /*
           Must be set manualy
@@ -593,46 +601,50 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
           Will be set automatically
           3102 - Multi Parcel, will be set automatically if Shipment has more than 1 and up to 10 GoodsItem. Requires array with this information:
           count => Total of registered GoodsItem.
-         */
-        $services = array();
-        $send_method = trim(str_ireplace('Itella_', '', $request->getShippingMethod()));
-        if ($send_method == "COURIER") {
+        */
+          
+        try {
+            $order = $request->getOrderShipment()->getOrder();
+            $allowed_services = $this->_allowedOrderServices($order);
+            $order_services = $request->getOrderShipment()->getOrder()->getItellaServices();
+            if ($order_services == null){
+                $order_services = array('services'=> array(), 'parcel_count' => '');
+            } else {
+                $order_services = json_decode($order_services, true);
+            }
+            $multi_parcel_count = $order_services['parcel_count'];
+            $order_services = $order_services['services'];
+            $services = array();
+            $send_method = trim(str_ireplace('Itella_', '', $request->getShippingMethod()));
+        } catch (Exception $e) {
+            $this->globalErrors[] = 'Services error: ' . $e->getMessage();
+            return array();
+        }
+        //if ($send_method == "COURIER") {
+        foreach ($allowed_services as $allowed_service) {
             try {
-                $itemsShipment = $request->getPackageItems();
-
-
-                $order_services = $request->getOrderShipment()->getOrder()->getItellaServices();
-                if ($order_services == null){
-                    $order_services = array('services'=> array(), 'parcel_count' => '');
-                } else {
-                    $order_services = json_decode($order_services, true);
+                if ( ! in_array($allowed_service, $order_services) ) {
+                    continue;
                 }
-                $multi_parcel_count = $order_services['parcel_count'];
-                $order_services = $order_services['services'];
-
-                if ($this->_isCod($request) || in_array(3101, $order_services)) {
-                    $service_cod = new AdditionalService(
-                            AdditionalService::COD,
-                            array(
-                        'amount' => round($request->getOrderShipment()->getOrder()->getGrandTotal(), 2),
-                        'codbic' => $this->getConfigData('cod_company'),
-                        'account' => $this->getConfigData('cod_bank_account'),
-                        'reference' => Helper::generateCODReference($request->getOrderShipment()->getOrder()->getId())
-                            )
+                if ($this->_isCod($request) || $allowed_service == AdditionalService::COD) {
+                    $services[] = new AdditionalService(
+                        AdditionalService::COD,
+                        array(
+                            'amount' => round($request->getOrderShipment()->getOrder()->getGrandTotal(), 2),
+                            'codbic' => $this->getConfigData('cod_bic'),
+                            'account' => $this->getConfigData('cod_bank_account'),
+                            'reference' => Helper::generateCODReference($request->getOrderShipment()->getOrder()->getId())
+                        )
                     );
-                    $services[] = $service_cod;
-                }
-                if (in_array(3104, $order_services)) {
-                    $service_fragile = new AdditionalService(AdditionalService::FRAGILE);
-                    $services[] = $service_fragile;
-                }
-                if (in_array(3166, $order_services)) {
-                    $service = new AdditionalService(AdditionalService::CALL_BEFORE_DELIVERY);
-                    $services[] = $service;
-                }
-                if (in_array(3174, $order_services)) {
-                    $service = new AdditionalService(AdditionalService::OVERSIZED);
-                    $services[] = $service;
+                } else if ($allowed_service == AdditionalService::MULTI_PARCEL) {
+                    $services[] = new AdditionalService(
+                        AdditionalService::MULTI_PARCEL,
+                        array(
+                            'count' => $multi_parcel_count ?? 1,
+                        )
+                    );
+                } else {
+                    $services[] = new AdditionalService($allowed_service);
                 }
             } catch (Exception $e) {
                 $this->globalErrors[] = 'Services error: ' . $e->getMessage();
@@ -662,7 +674,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                 }
                 $multi_parcel_count = $order_services['parcel_count'];
                 $order_services = $order_services['services'];
-                if (in_array(3102, $order_services) && $multi_parcel_count > 1 && $multi_parcel_count <=10) {
+                if (in_array(3102, $order_services) && $multi_parcel_count > 1 && $multi_parcel_count <=10 && !($this->_isCod($request) || in_array(3101, $order_services)) ) {
                     for ($i=1;$i<=$multi_parcel_count;$i++){
                         $item = new \Mijora\Itella\Shipment\GoodsItem();
                         $item->setGrossWeight(round($total_weight/$multi_parcel_count,3));
@@ -695,12 +707,20 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
     protected function _getItellaShippingType(\Magento\Framework\DataObject $request) {
         $send_method = trim(str_ireplace('Itella_', '', $request->getShippingMethod()));
         if ($send_method == "PARCEL_TERMINAL") {
-            return Shipment::PRODUCT_PICKUP;
+            return "PARCEL_TERMINAL";
         }
         if ($send_method == "COURIER") {
-            return Shipment::PRODUCT_COURIER;
+            return "COURIER";
         }
         return false;
+    }
+
+    public function _getCourierServiceCode() {
+        return $this->getConfigData('api_c_service') ?? Shipment::PRODUCT_COURIER;
+    }
+
+    public function _getPickupServiceCode() {
+        return $this->getConfigData('api_p_service') ?? Shipment::PRODUCT_PICKUP;
     }
 
     /**
@@ -729,20 +749,20 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                 throw new \Exception($error_msg . '.');
             }
 
-            if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_PICKUP) {
+            $shipment = new \Mijora\Itella\Shipment\Shipment($this->getConfigData('api_username'), $this->getConfigData('api_password'));
+            if ($this->_getItellaShippingType($request) == 'PARCEL_TERMINAL') {
                 $terminal_id = $request->getOrderShipment()->getOrder()->getShippingAddress()->getItellaParcelTerminal();
                 $terminal = str_pad($terminal_id, 9, "0", STR_PAD_LEFT);
-                $shipment = new \Mijora\Itella\Shipment\Shipment($this->getConfigData('user_2711'), $this->getConfigData('password_2711'));
                 $shipment
-                        ->setProductCode(Shipment::PRODUCT_PICKUP)
+                        ->setProductCode($this->_getPickupServiceCode())
                         ->setPickupPoint($terminal);
             }
-            if ($this->_getItellaShippingType($request) == Shipment::PRODUCT_COURIER) {
-                $shipment = new \Mijora\Itella\Shipment\Shipment($this->getConfigData('user_2317'), $this->getConfigData('password_2317'));
-                $shipment->setProductCode(Shipment::PRODUCT_COURIER);
+            if ($this->_getItellaShippingType($request) == 'COURIER') {
+                $shipment->setProductCode($this->_getCourierServiceCode());
             }
             $shipment
                     ->setShipmentNumber($request->getOrderShipment()->getOrder()->getId()) // Shipment/waybill identifier
+                    ->setRoutingClient('BAL-MAGENTO')
                     ->setSenderParty($sender) // previously created Sender object
                     ->setReceiverParty($receiver) // previously created Receiver object
                     ->addAdditionalServices($services)
