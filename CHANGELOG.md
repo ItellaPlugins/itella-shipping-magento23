@@ -1,6 +1,6 @@
 # Changelog
 
-## [unreleaed] - 2026-02-19
+## [1.4.0] - 2026-02-19
 ### Fixed
 - Fixed shipment registration when MSI is disabled
 
