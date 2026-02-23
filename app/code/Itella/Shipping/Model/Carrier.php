@@ -631,7 +631,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                         AdditionalService::COD,
                         array(
                             'amount' => round($request->getOrderShipment()->getOrder()->getGrandTotal(), 2),
-                            'codbic' => $this->getConfigData('cod_company'),
+                            'codbic' => $this->getConfigData('cod_bic'),
                             'account' => $this->getConfigData('cod_bank_account'),
                             'reference' => Helper::generateCODReference($request->getOrderShipment()->getOrder()->getId())
                         )

@@ -46,6 +46,9 @@
                 <field id="cod_bank_account" translate="label" type="text" sortOrder="92" showInDefault="1" showInWebsite="1" showInStore="0" >
                     <label>Bank account number</label>
                 </field>
+                <field id="cod_bic" translate="label" type="text" sortOrder="92" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <label>Bank BIC</label>
+                </field>
                 <field id="company_address" translate="label" type="text" sortOrder="93" showInDefault="1" showInWebsite="1" showInStore="0" >
                     <label>Company street address</label>
                 </field>
