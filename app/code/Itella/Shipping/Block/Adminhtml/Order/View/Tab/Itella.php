@@ -69,7 +69,7 @@ class Itella extends \Magento\Backend\Block\Template implements \Magento\Backend
             '3102' => __("Multi Parcel")
         );
 
-        $allowed_services = AdditionalService::getCodesByProduct($this->getOrderProductCode($order));
+        $allowed_services = $this->Itella_carrier->_allowedOrderServices($order);
         $services = array();
         foreach ($allowed_services as $service_code) {
             if (isset($all_services[$service_code])) {
@@ -78,23 +78,12 @@ class Itella extends \Magento\Backend\Block\Template implements \Magento\Backend
         }
         $shippingAddress = $order->getShippingAddress();
         $receiverCountry = $shippingAddress->getCountryId();
-        if ($this->getOrderProductCode($order) == Shipment::PRODUCT_HOME_PARCEL && $receiverCountry == 'FI') {
+        if ($this->Itella_carrier->_getOrderProductCode($order) == Shipment::PRODUCT_HOME_PARCEL && $receiverCountry == 'FI') {
             if (isset($services[AdditionalService::COD])) {
                 unset($services[AdditionalService::COD]);
             }
         }
         return $services;
-    }
-
-    public function getOrderProductCode($order)
-    {
-        $order_shipping_method = $order->getData('shipping_method');
-        if (strtoupper($order_shipping_method) == 'ITELLA_PARCEL_TERMINAL') {
-            return $this->Itella_carrier->_getPickupServiceCode();
-        } elseif (strtoupper($order_shipping_method) == 'ITELLA_COURIER') {
-            return $this->Itella_carrier->_getCourierServiceCode();
-        }
-        return '';
     }
     
     public function isItellaMethod($order)

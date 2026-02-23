@@ -572,6 +572,21 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
         return $terminals;
     }
 
+    public function _allowedOrderServices($order) {
+        return AdditionalService::getCodesByProduct($this->_getOrderProductCode($order));
+    }
+
+    public function _getOrderProductCode($order)
+    {
+        $order_shipping_method = $order->getData('shipping_method');
+        if (strtoupper($order_shipping_method) == 'ITELLA_PARCEL_TERMINAL') {
+            return $this->_getPickupServiceCode();
+        } elseif (strtoupper($order_shipping_method) == 'ITELLA_COURIER') {
+            return $this->_getCourierServiceCode();
+        }
+        return '';
+    }
+
     protected function _getItellaServices(\Magento\Framework\DataObject $request) {
         /*
           Must be set manualy
@@ -586,25 +601,33 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
           Will be set automatically
           3102 - Multi Parcel, will be set automatically if Shipment has more than 1 and up to 10 GoodsItem. Requires array with this information:
           count => Total of registered GoodsItem.
-         */
-        $services = array();
-        $send_method = trim(str_ireplace('Itella_', '', $request->getShippingMethod()));
-        if ($send_method == "COURIER") {
+        */
+          
+        try {
+            $order = $request->getOrderShipment()->getOrder();
+            $allowed_services = $this->_allowedOrderServices($order);
+            $order_services = $request->getOrderShipment()->getOrder()->getItellaServices();
+            if ($order_services == null){
+                $order_services = array('services'=> array(), 'parcel_count' => '');
+            } else {
+                $order_services = json_decode($order_services, true);
+            }
+            $multi_parcel_count = $order_services['parcel_count'];
+            $order_services = $order_services['services'];
+            $services = array();
+            $send_method = trim(str_ireplace('Itella_', '', $request->getShippingMethod()));
+        } catch (Exception $e) {
+            $this->globalErrors[] = 'Services error: ' . $e->getMessage();
+            return array();
+        }
+        //if ($send_method == "COURIER") {
+        foreach ($allowed_services as $allowed_service) {
             try {
-                $itemsShipment = $request->getPackageItems();
-
-
-                $order_services = $request->getOrderShipment()->getOrder()->getItellaServices();
-                if ($order_services == null){
-                    $order_services = array('services'=> array(), 'parcel_count' => '');
-                } else {
-                    $order_services = json_decode($order_services, true);
+                if ( ! in_array($allowed_service, $order_services) ) {
+                    continue;
                 }
-                $multi_parcel_count = $order_services['parcel_count'];
-                $order_services = $order_services['services'];
-
-                if ($this->_isCod($request) || in_array(3101, $order_services)) {
-                    $service_cod = new AdditionalService(
+                if ($this->_isCod($request) || $allowed_service == AdditionalService::COD) {
+                    $services[] = new AdditionalService(
                         AdditionalService::COD,
                         array(
                             'amount' => round($request->getOrderShipment()->getOrder()->getGrandTotal(), 2),
@@ -613,19 +636,15 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                             'reference' => Helper::generateCODReference($request->getOrderShipment()->getOrder()->getId())
                         )
                     );
-                    $services[] = $service_cod;
-                }
-                if (in_array(3104, $order_services)) {
-                    $service_fragile = new AdditionalService(AdditionalService::FRAGILE);
-                    $services[] = $service_fragile;
-                }
-                if (in_array(3166, $order_services)) {
-                    $service = new AdditionalService(AdditionalService::CALL_BEFORE_DELIVERY);
-                    $services[] = $service;
-                }
-                if (in_array(3174, $order_services)) {
-                    $service = new AdditionalService(AdditionalService::OVERSIZED);
-                    $services[] = $service;
+                } else if ($allowed_service == AdditionalService::MULTI_PARCEL) {
+                    $services[] = new AdditionalService(
+                        AdditionalService::MULTI_PARCEL,
+                        array(
+                            'count' => $multi_parcel_count ?? 1,
+                        )
+                    );
+                } else {
+                    $services[] = new AdditionalService($allowed_service);
                 }
             } catch (Exception $e) {
                 $this->globalErrors[] = 'Services error: ' . $e->getMessage();
