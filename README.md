@@ -4,4 +4,4 @@ After uploading module files, need to install its dependencies using composer fr
 ```
 composer require mijora/itella-api
 ```
-Supported itella-api version 2.3.1 or newer.
+Supported itella-api version 2.5.3 or newer.
