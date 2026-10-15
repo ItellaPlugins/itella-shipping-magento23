@@ -650,6 +650,16 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
                 $this->globalErrors[] = 'Services error: ' . $e->getMessage();
             }
         }
+
+        // Block delivery or redirection to outdoor locker
+        if ($this->_getItellaShippingType($request) == 'PARCEL_TERMINAL' && (int) $this->getConfigData('exclude_outdoors')) {
+            try {
+                $services[] = new AdditionalService(AdditionalService::BLOCK_OUTDOOR_LOCKER);
+            } catch (\Exception $e) {
+                $this->globalErrors[] = 'Services error: ' . $e->getMessage();
+            }
+        }
+
         return $services;
     }
 
