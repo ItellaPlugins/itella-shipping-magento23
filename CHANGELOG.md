@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+### Improved
+- Added additional service 3376 to parcel locker shipments when outdoor parcel lockers are excluded in the settings
+
+### Updated
+- Required itella-api version raised to 2.5.3
+
 ## [1.4.0] - 2026-02-19
 ### Fixed
 - Fixed shipment registration when MSI is disabled
