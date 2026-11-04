@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+### Fixed
+- Fixed double courier call request when "Call Smartposti" button is double-clicked
+
 ## [1.4.1] - 2026-10-15
 ### Improved
 - Added additional service 3376 to parcel locker shipments when outdoor parcel lockers are excluded in the settings

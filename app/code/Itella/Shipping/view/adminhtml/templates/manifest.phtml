@@ -188,12 +188,19 @@
                     });
                 });
                 
-                $('.call_itella_btn').on('click', function () {
+                var itellaCallSubmitted = false;
+                $('.call_itella_btn').on('click', function (e) {
+                    e.preventDefault();
+                    if (itellaCallSubmitted) {
+                        return false;
+                    }
+                    itellaCallSubmitted = true;
+                    $('.call_itella_btn').prop('disabled', true).addClass('disabled');
+
                     var date = $(this).attr('data-date');
                     $('#call-itella-form .date').val(date);
                     $('#call-itella-form').submit();
-                    
-
+                    return false;
                 });
                 
             });
