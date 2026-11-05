@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.4.2] - 2026-11-05
 ### Fixed
 - Fixed double courier call request when "Call Smartposti" button is double-clicked
 
