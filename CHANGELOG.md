@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+### Updated
+- Shipment tracking URL is now taken from itella-api library (`Helper::getTrackingUrl()`) based on the receiver country
+- Required itella-api version raised to 2.5.4
+
 ## [1.4.2] - 2026-11-05
 ### Fixed
 - Fixed double courier call request when "Call Smartposti" button is double-clicked
