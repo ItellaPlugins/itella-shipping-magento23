@@ -17,7 +17,7 @@ class Index extends  \Magento\Backend\App\Action
 
   public function execute()
   {
-      $requiredApiVersion = '2.5.0';
+      $requiredApiVersion = '2.5.4';
       $apiVersion = null;
       try {
           $apiVersion = \Composer\InstalledVersions::getPrettyVersion('mijora/itella-api');

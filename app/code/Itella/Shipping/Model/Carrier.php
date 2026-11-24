@@ -110,6 +110,11 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
     protected $_orderCollectionFactory;
 
     /**
+     * @var \Magento\Sales\Model\ResourceModel\Order\Shipment\Track\CollectionFactory
+     */
+    protected $_trackCollectionFactory;
+
+    /**
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
      * @param \Psr\Log\LoggerInterface $logger
@@ -156,8 +161,11 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             \Magento\Framework\App\Cache\ManagerFactory $cacheManagerFactory,
             \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
             \Magento\Framework\Message\ManagerInterface $messageManager,
+            ?\Magento\Sales\Model\ResourceModel\Order\Shipment\Track\CollectionFactory $trackCollectionFactory = null,
             array $data = []
     ) {
+        $this->_trackCollectionFactory = $trackCollectionFactory
+            ?: \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Sales\Model\ResourceModel\Order\Shipment\Track\CollectionFactory::class);
         $this->_checkoutSession = $checkoutSession;
 
         $this->_storeManager = $storeManager;
@@ -831,7 +839,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
     public function getTrackingInfo($trackingNumber) {
         $tracking = $this->_trackStatusFactory->create();
 
-        $url = 'https://itella.lt/en/business-customer/track-shipment/?trackingCode=' . $trackingNumber;
+        $url = Helper::getTrackingUrl($trackingNumber, $this->getTrackingCountryCode($trackingNumber));
 
         $tracking->setData([
             'carrier' => $this->_code,
@@ -840,6 +848,34 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             'url' => $url,
         ]);
         return $tracking;
+    }
+
+    /**
+     * Get country code for tracking URL: receiver country of the order the tracking number belongs to,
+     * falling back to the sender (company) country
+     *
+     * @param string $trackingNumber
+     * @return string
+     */
+    private function getTrackingCountryCode($trackingNumber) {
+        try {
+            $track = $this->_trackCollectionFactory->create()
+                    ->addFieldToFilter('track_number', $trackingNumber)
+                    ->addFieldToFilter('carrier_code', $this->_code)
+                    ->setPageSize(1)
+                    ->getFirstItem();
+
+            if ($track && $track->getId()) {
+                $address = $track->getShipment()->getOrder()->getShippingAddress();
+                if ($address && $address->getCountryId()) {
+                    return $address->getCountryId();
+                }
+            }
+        } catch (\Exception $e) {
+            $this->_logger->warning('Smartposti: failed to get tracking country for ' . $trackingNumber . ': ' . $e->getMessage());
+        }
+
+        return (string) $this->getConfigData('company_countrycode');
     }
 
     /**
